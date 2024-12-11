@@ -69,7 +69,6 @@ for c_item in sorted(Path(c_data_search_dir).iterdir()):
         ):
         # Parse the date from the filename (adjust to your naming pattern)
         c_file_date = (datetime.strptime(c_item_name[-11:-3], "%Y%m%d")).date()
-        print(c_file_date)
         dates.append(c_file_date)
         c_filepath = fr"{c_data_search_dir}/{c_item_name}"
         #c_ds.append(nc.Dataset(c_filepath, 'r'))
