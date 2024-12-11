@@ -6,15 +6,16 @@ from pathlib import Path
 from datetime import datetime, timedelta
 
 # Check if python script is running in interactive mode or by command line
-if getattr(sys, "ps1", None) is None:   # Command line
+if hasattr(sys, "ps1"):   # Command line
+    default_value = "20130101"
+    cwd = Path.cwd()
+    requested_date = input("Enter the requested date in format YYYYMMDD: ") or default_value
+else:                                  # Interactive window
     cwd = str(Path(__file__).resolve().parent.parent)
     if len(sys.argv) == 2:
         requested_date = sys.argv[1]
     else:
         sys.exit("Missing argument date in format YYYMMDD")
-else:                                   # Interactive window
-    cwd = Path.cwd()
-    requested_date = input("Enter the requested date in format YYYYMMDD")
 
 # Add the parent directory of the script to sys.path to work in command line execution
 sys.path.append(cwd)
@@ -129,6 +130,7 @@ sst_max = 21
 
 # Create a figure and axes (two subplots)
 fig, axs = plt.subplots(1, 2, figsize=(12, 6), constrained_layout=True)
+fig.suptitle(f"SST - {requested_date} - depth 0 - day avarage")
 
 # Plot the first dataset (c SST - daily)
 c_im = my_functions.plot_map_minmax_nocb(
@@ -161,6 +163,7 @@ cbar = fig.colorbar(
 
 # Create a figure and axes (two subplots)
 fig_d1, axs_d1 = plt.subplots(1, 2, figsize=(12, 6), constrained_layout=True)
+fig_d1.suptitle(f"SST - {requested_date} - Depth 1 - Day avarage")
 
 # Plot the first dataset (c SST - daily)
 c_im_d1 = my_functions.plot_map_minmax_nocb(
