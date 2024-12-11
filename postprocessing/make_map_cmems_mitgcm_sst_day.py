@@ -67,8 +67,8 @@ m_data_search_dir = fr"{m_data_basedir}/{requested_date_year}"
 #   If date subdir exists with same date as requested date override default value
 m_previous_day = (requested_date_dobj - timedelta(days=1)).strftime("%Y%m%d")
 m_data_search_subdir = fr"{m_data_search_dir}/{m_previous_day}"
-for m_data_search_dir_file in sorted(Path(m_data_search_dir).iterdir()): 
-    m_date_subdir = m_data_search_dir_file.name
+for m_data_search_dir_item in sorted(Path(m_data_search_dir).iterdir()): 
+    m_date_subdir = m_data_search_dir_item.name
     if m_date_subdir == requested_date:
         m_data_search_subdir = fr"{m_data_search_dir}/{m_date_subdir}"
         break
