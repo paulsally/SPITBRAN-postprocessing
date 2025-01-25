@@ -6,20 +6,20 @@ from pathlib import Path
 from datetime import datetime, timedelta
 
 # Check if python script is running in interactive mode or by command line
-if hasattr(sys, "ps1"):   # Command line
+if hasattr(sys, "ps1"):
     default_value = "20130101"
     cwd = Path.cwd()
     requested_date = input("Enter the requested date in format YYYYMMDD: ") or default_value
-else:                                  # Interactive window
+else:
     cwd = str(Path(__file__).resolve().parent.parent)
     if len(sys.argv) == 2:
         requested_date = sys.argv[1]
     else:
-        sys.exit("Missing argument date in format YYYMMDD")
+        sys.exit("Missing argument date in format YYYYMMDD")
 
 # Add the parent directory of the script to sys.path to work in command line execution
 sys.path.append(cwd)
-from lib import my_functions
+from lib import my_plot_utilities
 
 # Check if requested date is a valid date
 try:
