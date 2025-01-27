@@ -47,7 +47,6 @@ def plot_map_minmax_nocb (
     return ds_im
 
 
-
 def on_pick(event, lines, legend, fig):
     """
     Handles the pick event to toggle line visibility.

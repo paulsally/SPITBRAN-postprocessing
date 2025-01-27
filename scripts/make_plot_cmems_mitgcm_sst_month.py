@@ -53,21 +53,15 @@ target_var = my_sys_utilities.get_target_var(
 # %% 
 ## Search data directories for files related to target month
 # CMEMS
-c_time, c_var, c_var_long_name, c_var_units = my_nc_utilities.get_c_data(
-    spitbran_config.cfg_data_base_dirs['c'],
+c_time, c_var, c_var_long_name, c_var_units = my_nc_utilities.get_values_of_point_in_time(
+    "c",
     target_date,
-    spitbran_config.cfg_latitude,
-    spitbran_config.cfg_longitude,
-    spitbran_config.cfg_depth_index,
-    target_var
+    target_var,
 )
 # MITgcm-BFM
-m_time, m_var, m_var_d = my_nc_utilities.get_m_data(
-    spitbran_config.cfg_data_base_dirs['m'],
+m_time, m_var, m_var_d = my_nc_utilities.get_values_of_point_in_time(
+    "m",
     target_date,
-    spitbran_config.cfg_latitude,
-    spitbran_config.cfg_longitude,
-    spitbran_config.cfg_depth_index,
     target_var,
     True,
 )
@@ -129,6 +123,6 @@ plt.tight_layout()
 # %%
 # Save image and show the plot
 images_store_path = fr"{cwd}/IMAGES"
-plt.savefig(rf"{images_store_path}/{target_date}--{spitbran_config.cfg_latitude}-{spitbran_config.cfg_longitude}--sst.png", dpi=300, bbox_inches="tight")
+plt.savefig(rf"{images_store_path}/{target_date}--{spitbran_config.cfg_latitude}-{spitbran_config.cfg_longitude}--{target_var}.png", dpi=300, bbox_inches="tight")
 # Show the plot
 plt.show()
