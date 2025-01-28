@@ -1,5 +1,4 @@
 import sys
-from datetime import datetime
 from pathlib import Path
 import re
 
@@ -26,10 +25,11 @@ def get_target_date (
     if hasattr(sys, "ps1"):
         target_date = input(f"Enter the target date in format {p_default_format} (def {p_default_value}): ") or p_default_value
     else:
-        if len(sys.argv) == 2:
+        if len(sys.argv) > 2:
             target_date = sys.argv[1]
+            print(target_date)
         else:
-            sys.exit(f"Missing argument date in format  {p_default_format}")
+            sys.exit(f"Some arguments are missing. Date format is: {p_default_format}")
     return target_date
 
 
@@ -52,10 +52,10 @@ def get_target_var (
     if hasattr(sys, "ps1"):
         target_var = input(f"Enter the target var (def {p_default_value}): ") or p_default_value
     else:
-        if len(sys.argv) == 2:
-            target_var = sys.argv[1]
+        if len(sys.argv) > 2:
+            target_var = sys.argv[2]
         else:
-            sys.exit(f"Missing argument var")
+            sys.exit(f"Some arguments are missing.")
     return target_var
 
 
