@@ -1,4 +1,3 @@
-import spitbran_config
 import netCDF4 as nc
 import numpy as np
 from datetime import timedelta
@@ -242,9 +241,14 @@ def get_lat_lon_idx(p_ds, p_latitude, p_longitude):
 
 def get_values_of_point_in_time(
     p_ds_type,
+    p_data_base_dir,
     p_target_date,
     p_var,
-    p_var_d=False
+    p_var_fn_mapped,
+    p_latitude,
+    p_longitude,
+    p_depth_index,
+    p_var_d=False,
 ):
     """
     Searches the MITgcm-BFM data directory for files related to the target date (a month if format YYYYMM) and extracts the variable time series values for the given depth, lat, and lon.
@@ -253,12 +257,23 @@ def get_values_of_point_in_time(
     ----------
     p_ds_type :                 str
                                 String corresponding to the type of dataset (c for CMEMS, m for MITgcm-BFM).
+    p_data_base_dir :           str
+                                String corresponding to the path where data files are located.
     p_target_date :             str
                                 Target date in the format YYYYMM.
     p_var :                     str
                                 Varibale to extract from the data files.
+    p_var_fn_mapped :           str
+                                Mapped variable name as per the config file (as it shows in data filenames).
+    p_latitude :                float
+                                Degrees North latitude.
+    p_longitude :               float
+                                Degrees East longitude.
+    p_depth_index :             int
+                                Depth index (indicates the layer).
     p_var_d :                   bool
                                 Flag to compute average daily variable values.
+
 
     Returns
     -------
@@ -280,9 +295,9 @@ def get_values_of_point_in_time(
 
     matches = sorted(
         my_sys_utilities.get_files_by_keystring_in_fn(
-            spitbran_config.cfg_data_base_dirs[p_ds_type], 
+            p_data_base_dir, 
             p_ds_type,
-            p_var,
+            p_var_fn_mapped,
             p_target_date,
         )
     )
@@ -294,8 +309,8 @@ def get_values_of_point_in_time(
                 # Find nearest latitude and longitude cell indices
                 lat_idx, lon_idx = get_lat_lon_idx(
                     ds, 
-                    spitbran_config.cfg_latitude, 
-                    spitbran_config.cfg_longitude
+                    p_latitude, 
+                    p_longitude
                 )
                 # Get time defaults (base reference time and time unit)
                 time_base, time_unit = get_time_defaults(ds)
@@ -309,12 +324,12 @@ def get_values_of_point_in_time(
                 var_long_name = ds.variables[p_var].long_name
               
             # Extract variable values for the given depth, lat, and lon (cell)
-            var_values = ds.variables[p_var][:, spitbran_config.cfg_depth_index, lat_idx, lon_idx]
+            var_values = ds.variables[p_var][:, p_depth_index, lat_idx, lon_idx]
             y.extend(var_values)
 
             # Compute avarage daily variable values
             if (p_var_d == True):
-                var_d = ds.variables[p_var][:, spitbran_config.cfg_depth_index, lat_idx, lon_idx].mean(axis=0)
+                var_d = ds.variables[p_var][:, p_depth_index, lat_idx, lon_idx].mean(axis=0)
                 y_d.append(var_d)
 
         i += 1

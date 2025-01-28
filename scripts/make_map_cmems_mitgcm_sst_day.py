@@ -1,5 +1,4 @@
 import sys
-import numpy as np
 import netCDF4 as nc
 import matplotlib.pyplot as plt
 from pathlib import Path
@@ -133,7 +132,7 @@ fig, axs = plt.subplots(1, 2, figsize=(12, 6), constrained_layout=True)
 fig.suptitle(f"SST - {requested_date} - depth 0 - day avarage")
 
 # Plot the first dataset (c SST - daily)
-c_im = my_functions.plot_map_minmax_nocb(
+c_im = my_plot_utilities.plot_map_minmax_nocb(
     axs[0],
     "CMEMS",
     c_sst,
@@ -143,7 +142,7 @@ c_im = my_functions.plot_map_minmax_nocb(
 )
 
 # Plot the second dataset (m SST daily avaraged)
-m_im = my_functions.plot_map_minmax_nocb(
+m_im = my_plot_utilities.plot_map_minmax_nocb(
     axs[1],
     "MITgcm",
     m_sst,
@@ -166,7 +165,7 @@ fig_d1, axs_d1 = plt.subplots(1, 2, figsize=(12, 6), constrained_layout=True)
 fig_d1.suptitle(f"SST - {requested_date} - Depth 1 - Day avarage")
 
 # Plot the first dataset (c SST - daily)
-c_im_d1 = my_functions.plot_map_minmax_nocb(
+c_im_d1 = my_plot_utilities.plot_map_minmax_nocb(
     axs_d1[0],
     "CMEMS",
     c_sst,
@@ -176,7 +175,7 @@ c_im_d1 = my_functions.plot_map_minmax_nocb(
 )
 
 # Plot the second dataset (m SST daily avaraged)
-m_im_d1 = my_functions.plot_map_minmax_nocb(
+m_im_d1 = my_plot_utilities.plot_map_minmax_nocb(
     axs_d1[1],
     "MITgcm",
     m_sst_d1,

@@ -1,4 +1,3 @@
-import spitbran_config
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -60,7 +59,7 @@ def get_target_var (
     return target_var
 
 
-def get_files_by_keystring_in_fn(p_root_dir, p_ds_type, p_var, p_key_date_string):
+def get_files_by_keystring_in_fn(p_root_dir, p_ds_type, p_var_fn_mapped, p_key_date_string):
     """
     Searches for files in the root directory that contain the key string in the file name.
 
@@ -70,8 +69,8 @@ def get_files_by_keystring_in_fn(p_root_dir, p_ds_type, p_var, p_key_date_string
                                 Root directory to search for files.
     p_ds_type :                 str
                                 Dataset type (c for CMEMS, m for MITgcm).
-    p_var :                     str
-                                Variable name (see spitbran_config file).
+    p_var_fn_mapped :           str
+                                Mapped variable name as per the config file.
     p_key_date_string :         str
                                 Key string to search for in the file name.
     
@@ -83,8 +82,8 @@ def get_files_by_keystring_in_fn(p_root_dir, p_ds_type, p_var, p_key_date_string
 
     root_path = Path(p_root_dir)
     if p_ds_type == "c":
-        pattern = re.compile(fr"^[^\d]{{5}}_{spitbran_config.cfg_var_filename_map[p_var]['c']}-.*_{p_key_date_string}[^()]*\.nc$")
+        pattern = re.compile(fr"^[^\d]{{5}}_{p_var_fn_mapped}-.*_{p_key_date_string}[^()]*\.nc$")
     elif p_ds_type == "m":
-        pattern = re.compile(fr"^{p_key_date_string}\d{{2}}_.*--{spitbran_config.cfg_var_filename_map[p_var]['m']}[^()]*\.nc$")
+        pattern = re.compile(fr"^{p_key_date_string}\d{{2}}_.*--{p_var_fn_mapped}[^()]*\.nc$")
     matches = [item for item in root_path.rglob("*") if pattern.match(item.name)]
     return matches
