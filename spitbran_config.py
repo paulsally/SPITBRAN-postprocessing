@@ -1,5 +1,3 @@
-from datetime import datetime
-
 # Colours
 cfg_colours = {
     "ref": "#76C893",
@@ -20,17 +18,17 @@ cfg_data_base_dirs = {
     "m": r"/OCEANASTORE/progetti/spitbran2/2013"
 }
 
-# Set the reference dates for the datasets
-cfg_base_times = {
-    "c": datetime(1900, 1, 1, 0, 0, 0),
-    "m": datetime(1970, 1, 1, 0, 0, 0),
-}
+# # Set the reference dates for the datasets
+# cfg_base_times = {
+#     "c": datetime(1900, 1, 1, 0, 0, 0),
+#     "m": datetime(1970, 1, 1, 0, 0, 0),
+# }
 
-# Set the time units for datasets
-cfg_base_time_unit = {
-    "c": "seconds",
-    "m": "minutes",
-}
+# # Set the time units for datasets
+# cfg_base_time_unit = {
+#     "c": "seconds",
+#     "m": "minutes",
+# }
 
 # Set associations between variable name and file name
 cfg_var_filename_map = {

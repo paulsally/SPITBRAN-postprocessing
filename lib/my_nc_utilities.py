@@ -1,10 +1,9 @@
 import spitbran_config
 import netCDF4 as nc
 import numpy as np
-from datetime import datetime, timedelta
+from datetime import timedelta
+from dateutil.parser import parse
 from lib import my_sys_utilities
-from pathlib import Path
-import spitbran_config
 
 
 # def get_c_data(
@@ -174,9 +173,9 @@ def get_time_defaults(p_ds):
 
     time_units_keys = ['unit', 'base']
     time_units = dict(zip(time_units_keys, p_ds.variables['time'].units.split(" since ")))
-    base_time = datetime.strptime(time_units['base'], "%Y-%m-%d")
+    time_base = parse(time_units['base'])
 
-    return base_time, time_units['unit']
+    return time_base, time_units['unit']
 
 
 # def get_time(p_ds, p_base_time, p_time_unit):
@@ -258,6 +257,8 @@ def get_values_of_point_in_time(
                                 Target date in the format YYYYMM.
     p_var :                     str
                                 Varibale to extract from the data files.
+    p_var_d :                   bool
+                                Flag to compute average daily variable values.
 
     Returns
     -------
@@ -296,21 +297,17 @@ def get_values_of_point_in_time(
                     spitbran_config.cfg_latitude, 
                     spitbran_config.cfg_longitude
                 )
+                # Get time defaults (base reference time and time unit)
+                time_base, time_unit = get_time_defaults(ds)
+
             time = ds.variables['time'][:]
-            print(ds.variables['time'].units)
+            new_time = [time_base + timedelta(**{time_unit: int(t)}) for t in time]
+            x.extend(new_time)
 
             if p_ds_type == "c":
-                # Format times (x-axis)
-                base_time = datetime(1900, 1, 1, 0, 0, 0)
-                new_time = [base_time + timedelta(minutes=int(t)) for t in time]
                 var_units = ds.variables[p_var].units
                 var_long_name = ds.variables[p_var].long_name
-            elif p_ds_type == "m":
-                # Format times (x-axis)
-                base_time = datetime(1970, 1, 1, 0, 0, 0)
-                new_time = [base_time + timedelta(seconds=int(t)) for t in time]
-            x.extend(new_time)
-                        
+              
             # Extract variable values for the given depth, lat, and lon (cell)
             var_values = ds.variables[p_var][:, spitbran_config.cfg_depth_index, lat_idx, lon_idx]
             y.extend(var_values)
