@@ -29,7 +29,7 @@ from lib import my_nc_utilities
 from lib import my_plot_utilities
 import importlib
 
-## Reload modules (comment out once done with modifying the modules)
+## Reload modules (comment out once done with editing the modules)
 # importlib.reload(spitbran_config)
 # importlib.reload(my_sys_utilities)
 # importlib.reload(my_plot_utilities)
@@ -55,7 +55,7 @@ target_var_fn_mapped['m'] = spitbran_config.cfg_var_filename_map[target_var]["m"
 # %% 
 ## Search data directories for files related to target month
 # CMEMS
-c_time, c_var, c_var_long_name, c_var_units = my_nc_utilities.get_values_of_point_in_time(
+c_time, c_var, c_var_long_name, c_var_units = my_nc_utilities.get_values_in_point_with_time(
     "c",
     spitbran_config.cfg_data_base_dirs['c'],
     target_date,
@@ -66,7 +66,7 @@ c_time, c_var, c_var_long_name, c_var_units = my_nc_utilities.get_values_of_poin
     spitbran_config.cfg_depth_index,
 )
 # MITgcm-BFM
-m_time, m_var, m_var_d = my_nc_utilities.get_values_of_point_in_time(
+m_time, m_var, m_var_d = my_nc_utilities.get_values_in_point_with_time(
     "m",
     spitbran_config.cfg_data_base_dirs['m'],
     target_date,
