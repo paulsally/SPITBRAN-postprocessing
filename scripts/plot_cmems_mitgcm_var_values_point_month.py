@@ -27,9 +27,9 @@ import spitbran_config
 from lib import my_sys_utilities
 from lib import my_nc_utilities
 from lib import my_plot_utilities
-import importlib
 
-## Reload modules (comment out once done with editing the modules)
+## Reload modules (uncomment this when editing the modules as it picks up the changes)
+# import importlib
 # importlib.reload(spitbran_config)
 # importlib.reload(my_sys_utilities)
 # importlib.reload(my_plot_utilities)
@@ -38,12 +38,13 @@ import importlib
 #%% 
 ## Get target date and variable and set defaults
 target_date = my_sys_utilities.get_target_date(
-    "201302",
+    "201301",
     "YYYYMM",
 )
 target_var = my_sys_utilities.get_target_var(
-    "thetao",
+    "so",
 )
+
 
 #%%
 ## Map the target variable to corresponding variable names in CMEMS and MITgcm-BFM files
@@ -78,12 +79,14 @@ m_time, m_var, m_var_d = my_nc_utilities.get_values_in_point_with_time(
     True,
 )
 
+
 # %%
 ## Reset settinngs and close any previous plots
 plt.rcdefaults()
 plt.close('all')
 # Disable automatic browser opening
 matplotlib.rcParams['webagg.open_in_browser'] = False
+
 
 # %%
 ## Plot the curves
@@ -106,6 +109,7 @@ ax.set_xlabel("Date")
 ax.set_ylabel(f"{target_var} ({c_var_units})")
 ax.grid(True)
 
+
 # %%
 ## Add an interactive legend
 legend = ax.legend(loc="upper right", title="Click to toggle visibility", fancybox=True)
@@ -124,12 +128,14 @@ fig.canvas.mpl_connect('pick_event', lambda event: my_plot_utilities.on_pick(eve
 # print("Figure size:", fig.get_size_inches())
 # print("Figure DPI:", fig.get_dpi())
 
+
 # %%
 ## Adjust layout
 # Rotate the date labels for better readability
 plt.xticks(rotation=45)
 # Tight layout to avoid clipping of legend
 plt.tight_layout()
+
 
 # %%
 # Save image and show the plot
