@@ -15,25 +15,24 @@ if hasattr(sys, "ps1"):
     cwd = Path.cwd() # interactive window
 else:
     cwd = str(Path(__file__).resolve().parent.parent) # command line
-
-
-# %%
-## Import local settings and liabraries
 # Add the script parent directory to sys.path to allow importing lib in command line execution mode
 if str(cwd) not in sys.path:
     sys.path.append(str(cwd))
 
+
+# %%
+## Import local settings and liabraries
 import spitbran_config
 from lib import my_sys_utilities
 from lib import my_nc_utilities
 from lib import my_plot_utilities
 
 ## Reload modules (uncomment this when editing the modules as it picks up the changes)
-# import importlib
-# importlib.reload(spitbran_config)
-# importlib.reload(my_sys_utilities)
-# importlib.reload(my_plot_utilities)
-# importlib.reload(my_nc_utilities)
+import importlib
+importlib.reload(spitbran_config)
+importlib.reload(my_sys_utilities)
+importlib.reload(my_plot_utilities)
+importlib.reload(my_nc_utilities)
 
 #%% 
 ## Get target date and variable and set defaults
@@ -42,7 +41,7 @@ target_date = my_sys_utilities.get_target_date(
     "YYYYMM",
 )
 target_var = my_sys_utilities.get_target_var(
-    "so",
+    "thetao",
 )
 
 
@@ -56,7 +55,7 @@ target_var_fn_mapped['m'] = spitbran_config.cfg_var_filename_map[target_var]["m"
 # %% 
 ## Search data directories for files related to target month
 # CMEMS
-c_time, c_var, c_var_long_name, c_var_units = my_nc_utilities.get_values_in_point_with_time(
+c_time, c_var, c_var_long_name, c_var_units = my_nc_utilities.get_values_in_point_with_time_given_month(
     "c",
     spitbran_config.cfg_data_base_dirs['c'],
     target_date,
@@ -67,7 +66,7 @@ c_time, c_var, c_var_long_name, c_var_units = my_nc_utilities.get_values_in_poin
     spitbran_config.cfg_depth_index,
 )
 # MITgcm-BFM
-m_time, m_var, m_var_d = my_nc_utilities.get_values_in_point_with_time(
+m_time, m_var, m_var_d = my_nc_utilities.get_values_in_point_with_time_given_month(
     "m",
     spitbran_config.cfg_data_base_dirs['m'],
     target_date,
