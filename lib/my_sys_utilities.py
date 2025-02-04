@@ -81,9 +81,24 @@ def get_files_by_keystring_in_fn(p_root_dir, p_ds_type, p_var_fn_mapped, p_key_d
     """
 
     root_path = Path(p_root_dir)
+    year_pattern = re.compile(r"^\d{4}$")
+    skip_subdir = True
     if p_ds_type == "c":
         pattern = re.compile(fr"^[^\d]{{5}}_{p_var_fn_mapped}-.*_{p_key_date_string}[^()]*\.nc$")
     elif p_ds_type == "m":
+        skip_subdir = False
         pattern = re.compile(fr"^{p_key_date_string}\d{{2}}_.*--{p_var_fn_mapped}[^()]*\.nc$")
-    matches = [item for item in root_path.rglob("*") if pattern.match(item.name)]
+    #matches = [item for item in root_path.rglob("*") if pattern.match(item.name)]
+
+    matches = []
+    for item in root_path.rglob("*"):
+        if skip_subdir:
+            if pattern.match(item.name):
+                matches.append(item)
+        else:
+            # Check if the item is a directory and its name corresponds to 4 digits (year). This serves the purpose of discarding data contained in backup or other directories. 
+            if (item.is_dir and year_pattern.match(item.name)):  
+                for subitem in item.rglob("*"):
+                    if pattern.match(subitem.name):
+                        matches.append(subitem)
     return matches
