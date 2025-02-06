@@ -27,7 +27,6 @@ def get_target_date (
     else:
         if len(sys.argv) > 2:
             target_date = sys.argv[1]
-            print(target_date)
         else:
             sys.exit(f"Some arguments are missing. Date format is: {p_default_format}")
     return target_date
@@ -59,16 +58,16 @@ def get_target_var (
     return target_var
 
 
-def get_files_by_keystring_in_fn(p_root_dir, p_ds_type, p_var_fn_mapped, p_key_date_string):
+def get_files_by_keystring_in_fn(p_ds_type, p_root_dir, p_var_fn_mapped, p_key_date_string):
     """
     Searches for files in the root directory that contain the key string in the file name.
 
     Parameters
     ----------
-    p_root_dir :                str
-                                Root directory to search for files.
     p_ds_type :                 str
                                 Dataset type (c for CMEMS, m for MITgcm).
+    p_root_dir :                str
+                                Root directory to search for files.    
     p_var_fn_mapped :           str
                                 Mapped variable name as per the config file.
     p_key_date_string :         str
@@ -83,9 +82,15 @@ def get_files_by_keystring_in_fn(p_root_dir, p_ds_type, p_var_fn_mapped, p_key_d
     root_path = Path(p_root_dir)
     year_pattern = re.compile(r"^\d{4}$")
     if p_ds_type == "c":
+        # Test for file name 
+        #   starting with 5 characters (cmems) excluding digits
+        #   containing the target variable name
         pattern = re.compile(fr"^[^\d]{{5}}_{p_var_fn_mapped}-.*_{p_key_date_string}[^()]*\.nc$")
     elif p_ds_type == "m":
-        pattern = re.compile(fr"^{p_key_date_string}\d{{2}}_.*--{p_var_fn_mapped}[^()]*\.nc$")
+        # Test for file name 
+        #   starting with 6 digits which is the target date and may be 4 or 6 digits long
+        #   containing the target variable name
+        pattern = re.compile(fr"^{p_key_date_string}\d{{2}}|{p_key_date_string}\d{{0}}_.*--{p_var_fn_mapped}-[^()]*\.nc$")
     else:
         raise ValueError("Invalid dataset type")
 
@@ -93,8 +98,21 @@ def get_files_by_keystring_in_fn(p_root_dir, p_ds_type, p_var_fn_mapped, p_key_d
     matches = [
         subitem
         for item in root_path.rglob("*")
-            if item.is_dir() and year_pattern.match(item.name)
+            # if item.is_dir() and year_pattern.match(item.name)
+            if item.is_dir()
                 for subitem in item.rglob("*")
                     if pattern.match(subitem.name)
     ]
+    # matches = []
+    # # Loop through all items recursively in root_path
+    # for item in root_path.rglob("*"):
+    #     # Check if the item is a directory and its name matches the year pattern
+    #     if item.is_dir() and year_pattern.match(item.name):
+    #         # Loop through all items in the matching directory
+    #         for subitem in item.rglob("*"):
+    #             # Check if the subitem's name matches the given pattern
+    #             if pattern.match(subitem.name):
+    #                 # Add the matching subitem to the matches list
+    #                 matches.append(subitem)
+    print(f"matches: {matches}")
     return matches
