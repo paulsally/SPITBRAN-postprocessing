@@ -22,12 +22,20 @@ cfg_var_filename_map = {
         "c": "tem",
         "m": "TEMP",
     },
-    "cur": {
-        "c": "cur",
-        "m": "RFVL",
-    },
     "so": {
         "c": "sal",
         "m": "PSAL",
     },
+}
+
+# Set the default min max values for the color bar scale
+cfg_var_min_max = {
+    "thetao": {
+        "c": [11, 17],
+        "m": [11, 17]
+    },
+    "so": {
+        "c": [36, 40],
+        "m": [36, 40]
+    }
 }

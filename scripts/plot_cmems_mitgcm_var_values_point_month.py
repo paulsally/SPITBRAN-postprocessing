@@ -27,7 +27,7 @@ from lib import my_sys_utilities
 from lib import my_nc_utilities
 from lib import my_plot_utilities
 
-## Reload modules (uncomment this when editing the modules as it picks up the changes)
+## Reload modules (comment for performance, uncomment for development, i.e. when editing the modules)
 import importlib
 importlib.reload(spitbran_config)
 importlib.reload(my_sys_utilities)
