@@ -1,6 +1,5 @@
 # %%
 ## Import libraries
-import sys
 import matplotlib
 # Set the backend
 matplotlib.use('webAgg')  # Use 'Qt5Agg', 'nbAgg', or 'webAgg' depending on environment
@@ -9,23 +8,16 @@ import matplotlib.dates as mdates
 from pathlib import Path
 
 
-# %% 
-## Get current working directory
-if hasattr(sys, "ps1"):
-    cwd = Path.cwd() # interactive window
-else:
-    cwd = str(Path(__file__).resolve().parent.parent) # command line
-# Add the script parent directory to sys.path to allow importing lib in command line execution mode
-if str(cwd) not in sys.path:
-    sys.path.append(str(cwd))
-
-
 # %%
 ## Import local settings and liabraries
 import spitbran_config
 from lib import my_sys_utilities
 from lib import my_nc_utilities
 from lib import my_plot_utilities
+
+# %% 
+## Get current working directory
+cwd = my_sys_utilities.get_cwd()
 
 ## Reload modules (comment for performance, uncomment for development, i.e. when editing the modules)
 import importlib
@@ -75,7 +67,7 @@ m_time, m_var, m_var_d = my_nc_utilities.get_values_in_point_with_time_given_mon
     spitbran_config.cfg_latitude,
     spitbran_config.cfg_longitude,
     spitbran_config.cfg_depth_index,
-    True,
+    False,
 )
 
 

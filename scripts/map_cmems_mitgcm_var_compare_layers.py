@@ -1,24 +1,5 @@
 import matplotlib.pyplot as plt
-from IPython import get_ipython
-from pathlib import Path
 import numpy as np
-
-
-# ## Get current working directory
-# if hasattr(sys, "ps1"):
-#     cwd = Path.cwd() # interactive window
-# else:
-#     cwd = str(Path(__file__).resolve().parent.parent) # command line
-# # Add the script parent directory to sys.path to allow importing lib in command line execution mode
-# if str(cwd) not in sys.path:
-#     sys.path.append(str(cwd))
-try:
-    get_ipython()  # Jupyter or IPython environment
-    cwd = Path.cwd()  # interactive window
-except NameError:
-    cwd = str(Path(__file__).resolve().parent.parent)  # command line
-
-
 
 ## Import local settings and liabraries
 import spitbran_config
@@ -26,6 +7,9 @@ from lib import my_sys_utilities
 from lib import my_nc_utilities
 from lib import my_plot_utilities
 from lib import my_debug_utilities
+
+## Get current working directory
+cwd = my_sys_utilities.get_cwd()
 
 ## Reload modules (comment for performance, uncomment for development, i.e. when editing the modules)
 import importlib
@@ -214,4 +198,3 @@ var_d0_d1_diff_cb = fig_d0_d1_diff.colorbar(
 
 # Save image
 fig_d0_d1_diff.savefig(rf"{cwd}/IMAGES/{target_var}-{target_date}--{var_min_across_layers}-{var_max_across_layers}--{data_type}--d0-d1-diff.png", dpi=300, bbox_inches='tight')
-

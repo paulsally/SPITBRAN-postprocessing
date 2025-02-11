@@ -114,8 +114,8 @@ def get_values_in_point_with_time_given_month(
 
     matches = sorted(
         my_sys_utilities.get_files_by_keystring_in_fn(
-            p_data_base_dir, 
             p_ds_type,
+            p_data_base_dir, 
             p_var_fn_mapped,
             p_target_date,
         )
@@ -142,11 +142,12 @@ def get_values_in_point_with_time_given_month(
                 var_units = ds.variables[p_var].units
                 var_long_name = ds.variables[p_var].long_name
               
-            # Extract variable values for the given depth, lat, and lon (cell)
+            # Extract variable values for the given depth, lat and lon (cell)
+            # print(ds.variables.keys())
             var_values = ds.variables[p_var][:, p_depth_index, lat_idx, lon_idx]
             y.extend(var_values)
 
-            # Compute avarage daily variable values
+            # Compute average daily variable values
             if (p_var_d == True):
                 var_d = ds.variables[p_var][:, p_depth_index, lat_idx, lon_idx].mean(axis=0)
                 y_d.append(var_d)
@@ -157,7 +158,8 @@ def get_values_in_point_with_time_given_month(
         return x, y, var_long_name, var_units
     elif p_ds_type == "m":
         return x, y, y_d
-    
+
+   
 def get_values_map_specific_day(
     p_ds_type,
     p_data_base_dir,
