@@ -133,6 +133,12 @@ def get_files_by_keystring_in_fn(p_ds_type, p_root_dir, p_var_fn_mapped, p_key_d
         raise ValueError("Invalid dataset type")
 
     # Check if key string is found in the file name and the filename is inside a directory corresponding to a year (i.e. all directories that contains other than 4 digits are discarded)
+    matches = [
+        item
+        for item in root_path.rglob("*")
+            if item.is_file() and pattern.match(item.name)
+    ]
+        
     # matches = [
     #     subitem
     #     for item in root_path.rglob("*")
@@ -141,19 +147,18 @@ def get_files_by_keystring_in_fn(p_ds_type, p_root_dir, p_var_fn_mapped, p_key_d
     #             for subitem in item.rglob("*")
     #                 if subitem.is_file() and pattern.match(subitem.name)
     # ]
-
     # Loop through all items recursively in root_path
-    matches = []
-    for item in root_path.rglob("*"):
-        # Check if the item is a directory and its name matches the year pattern
-        # if item.is_dir() and year_pattern.match(item.name):
-        if item.is_dir() and year_pattern.match(item.name):
-            # Loop through all items in the matching directory
-            for subitem in item.rglob("*"):
-                # Check if the subitem's name matches the given pattern
-                if subitem.is_file() and pattern.match(subitem.name):
-                    # Add the matching subitem to the matches list
-                    matches.append(subitem)
-                    print(subitem)
+    # matches = []
+    # for item in root_path.rglob("*"):
+    #     # Check if the item is a directory and its name matches the year pattern
+    #     # if item.is_dir() and year_pattern.match(item.name):
+    #     if item.is_dir() and year_pattern.match(item.name):
+    #         # Loop through all items in the matching directory
+    #         for subitem in item.rglob("*"):
+    #             # Check if the subitem's name matches the given pattern
+    #             if subitem.is_file() and pattern.match(subitem.name):
+    #                 # Add the matching subitem to the matches list
+    #                 matches.append(subitem)
+    #                 print(subitem)
     print(f"matches: {sorted(matches)}")
     return sorted(matches)

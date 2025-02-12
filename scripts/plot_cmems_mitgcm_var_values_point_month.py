@@ -67,7 +67,7 @@ m_time, m_var, m_var_d = my_nc_utilities.get_values_in_point_with_time_given_mon
     spitbran_config.cfg_latitude,
     spitbran_config.cfg_longitude,
     spitbran_config.cfg_depth_index,
-    False,
+    True,
 )
 
 

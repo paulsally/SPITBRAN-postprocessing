@@ -13,7 +13,7 @@ cfg_depth_index = 0
 # Set the paths to CMEMS and MITgcm-BFM base data directory
 cfg_data_base_dirs = {
     "c": r"/OCEANASTORE/database/CMEMS/rean-d",
-    "m": r"/OCEANASTORE/progetti/spitbran2/output"
+    "m": r"/OCEANASTORE/progetti/spitbran2/MITgcm_products/outputs"
 }
 
 # Set associations between variable name and file name
