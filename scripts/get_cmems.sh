@@ -34,8 +34,6 @@ rm $tem_file
 rm $sal_file
 rm $ssh_file
 
-copernicusmarine login
-
 # currents
 yes | copernicusmarine subset --dataset-id $dataset_cur --dataset-version 202411 --variable uo --variable vo --start-datetime $day --end-datetime $day --minimum-longitude $lonmin --maximum-longitude $lonmax --minimum-latitude $latmin --maximum-latitude $latmax --minimum-depth $depthmin --maximum-depth $depthmax -o $dir_file -f $cur_file
 
