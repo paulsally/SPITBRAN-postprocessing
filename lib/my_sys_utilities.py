@@ -108,7 +108,7 @@ def get_files_by_keystring_in_fn(p_ds_type, p_root_dir, p_var_fn_mapped, p_key_d
                                 List of files that contain the key string in the file name.
     """
     root_path = Path(p_root_dir)
-    year_pattern = re.compile(r"^\d{4}$")
+    # year_pattern = re.compile(r"^\d{4}$")
     if p_ds_type == "c":
         # Test for file name 
         #   starting with 5 characters (cmems) excluding digits
@@ -120,15 +120,13 @@ def get_files_by_keystring_in_fn(p_ds_type, p_root_dir, p_var_fn_mapped, p_key_d
         #   starting with 6 digits which is the target date and may be 4 or 6 digits long
         #   containing the target variable name
         if len(p_key_date_string) == 6:
-            print("qui")
             pattern = re.compile(fr"^{p_key_date_string}\d{{2}}_.*--{p_var_fn_mapped}-[^()]*\.nc$")
         elif len(p_key_date_string) == 8:
-            print("qua")
             pattern = re.compile(fr"^{p_key_date_string}_.*--{p_var_fn_mapped}-[^()]*\.nc$")
         else:
             raise ValueError("Invalid date")
         # pattern = re.compile(fr"^{p_key_date_string}\d{{2}}|{p_key_date_string}\d{{0}}_.*--{p_var_fn_mapped}-[^()]*\.nc$")
-        print(pattern)
+        # print(pattern)
     else:
         raise ValueError("Invalid dataset type")
 
@@ -160,5 +158,5 @@ def get_files_by_keystring_in_fn(p_ds_type, p_root_dir, p_var_fn_mapped, p_key_d
     #                 # Add the matching subitem to the matches list
     #                 matches.append(subitem)
     #                 print(subitem)
-    print(f"matches: {sorted(matches)}")
+    # print(f"matches: {sorted(matches)}")
     return sorted(matches)

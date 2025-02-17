@@ -5,7 +5,6 @@ import matplotlib
 matplotlib.use('webAgg')  # Use 'Qt5Agg', 'nbAgg', or 'webAgg' depending on environment
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-from pathlib import Path
 
 
 # %%
