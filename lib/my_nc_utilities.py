@@ -138,7 +138,7 @@ def get_values_in_point_with_time_given_month(
             new_time = [time_base + timedelta(**{time_unit: int(t)}) for t in time]
             x.extend(new_time)
 
-            if p_ds_type == "c":
+            if p_ds_type == "c-rean":
                 var_units = ds.variables[p_var].units
                 var_long_name = ds.variables[p_var].long_name
               
@@ -154,7 +154,7 @@ def get_values_in_point_with_time_given_month(
 
         i += 1
 
-    if p_ds_type == "c":
+    if p_ds_type == "c-rean":
         return x, y, var_long_name, var_units
     elif p_ds_type == "m":
         return x, y, y_d
@@ -192,8 +192,7 @@ def get_values_map_specific_day(
             p_data_base_dir,
             p_var_fn_mapped,
             p_target_date,
-        )
-
+    )
     fp = match[0]
     ds = nc.Dataset(fp, "r")
 

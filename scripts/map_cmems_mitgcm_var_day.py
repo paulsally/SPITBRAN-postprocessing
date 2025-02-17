@@ -42,17 +42,17 @@ target_var = my_sys_utilities.get_target_var(
 # Load CMEMS output file
 c_ds = my_nc_utilities.get_values_map_specific_day(
     "c",
-    spitbran_config.cfg_data_base_dirs['c'],
+    spitbran_config.cfg_data_base_dirs["c-rean"],
     target_date,
-    spitbran_config.mapped_var_fn['c'],
+    spitbran_config.mapped_var_fn["c-rean"],
 )
 
 # Load MITgcm-BFM output file
 m_ds = my_nc_utilities.get_values_map_specific_day(
     "m",
-    spitbran_config.cfg_data_base_dirs['m'],
+    spitbran_config.cfg_data_base_dirs["m"],
     target_date,
-    spitbran_config.mapped_var_fn['m'],
+    spitbran_config.mapped_var_fn["m"],
 )
 
 

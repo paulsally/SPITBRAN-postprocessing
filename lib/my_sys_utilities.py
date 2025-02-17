@@ -109,12 +109,12 @@ def get_files_by_keystring_in_fn(p_ds_type, p_root_dir, p_var_fn_mapped, p_key_d
     """
     root_path = Path(p_root_dir)
     # year_pattern = re.compile(r"^\d{4}$")
-    if p_ds_type == "c":
+    if p_ds_type == "c-rean":
         # Test for file name 
         #   starting with 5 characters (cmems) excluding digits
         #   containing the target variable name
         pattern = re.compile(fr"^[^\d]{{5}}_{p_var_fn_mapped}-.*_{p_key_date_string}[^()]*\.nc$")
-        print(pattern)
+        # print(pattern)
     elif p_ds_type == "m":
         # Test for file name 
         #   starting with 6 digits which is the target date and may be 4 or 6 digits long
@@ -159,4 +159,7 @@ def get_files_by_keystring_in_fn(p_ds_type, p_root_dir, p_var_fn_mapped, p_key_d
     #                 matches.append(subitem)
     #                 print(subitem)
     # print(f"matches: {sorted(matches)}")
-    return sorted(matches)
+    if (len(matches) > 0):
+        return sorted(matches)
+    else:
+        raise RuntimeError(f"No Data Found in {p_root_dir}")
