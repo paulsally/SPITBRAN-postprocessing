@@ -193,7 +193,10 @@ def get_values_map_specific_day(
             p_var_fn_mapped,
             p_target_date,
     )
-    fp = match[0]
+  
+    try:
+        fp = match[0]
+    except IndexError:
+        raise RuntimeError(f"No files found for the target date: {p_target_date} in {p_data_base_dir}")
     ds = nc.Dataset(fp, "r")
-
     return ds

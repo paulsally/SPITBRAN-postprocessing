@@ -95,7 +95,7 @@ def get_files_by_keystring_in_fn(p_ds_type, p_root_dir, p_var_fn_mapped, p_key_d
     ----------
     p_ds_type :                 str
                                 Dataset type (c for CMEMS, m for MITgcm).
-    p_root_dir :                str
+    p_root_dir :                Path
                                 Root directory to search for files.    
     p_var_fn_mapped :           str
                                 Mapped variable name as per the config file.
@@ -136,7 +136,6 @@ def get_files_by_keystring_in_fn(p_ds_type, p_root_dir, p_var_fn_mapped, p_key_d
         for item in root_path.rglob("*")
             if item.is_file() and pattern.match(item.name)
     ]
-        
     # matches = [
     #     subitem
     #     for item in root_path.rglob("*")
@@ -159,7 +158,5 @@ def get_files_by_keystring_in_fn(p_ds_type, p_root_dir, p_var_fn_mapped, p_key_d
     #                 matches.append(subitem)
     #                 print(subitem)
     # print(f"matches: {sorted(matches)}")
-    if (len(matches) > 0):
-        return sorted(matches)
-    else:
-        raise RuntimeError(f"No Data Found in {p_root_dir}")
+
+    return sorted(matches)
