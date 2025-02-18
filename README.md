@@ -18,7 +18,7 @@ MITgcm-BFM postprocessing contains scripts for comparing model output files with
 
 ```python
 cfg_data_base_dirs = {
-    "c": r"/OCEANASTORE/database/CMEMS/rean-d",
+    "c-rean": r"/OCEANASTORE/database/CMEMS/rean-d",
     "m": r"/OCEANASTORE/progetti/spitbran2"
 }
 ```
