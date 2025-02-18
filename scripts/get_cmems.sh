@@ -19,7 +19,7 @@ depthmin=0
 depthmax=2841.841
 
 # dir_file=$SCRATCH'/cmems_data/phy/'
-dir_file=$HOME'/SPITBRAN/DATA/CMEMS/rean_d/'
+dir_file=$HOME'/SPITBRAN/DATA/CMEMS/rean-d/'
 
 
 day=$(date -d "$data" +"%Y-%m-%dT00:00:00")

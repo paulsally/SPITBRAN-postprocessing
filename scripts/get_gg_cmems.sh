@@ -6,7 +6,7 @@ dend=$2
 
 giorno=$dstart
 
-$HOME/cmems/get_cmems.sh $giorno
+$HOME/SPITBRAN/scripts/get_cmems.sh $giorno
 
 while [[ $giorno<=$dend ]]; do
   giorno=$(date -d "$giorno +1 day" +"%Y-%m-%d")
