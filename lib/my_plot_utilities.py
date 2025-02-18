@@ -14,7 +14,7 @@ def plot_map_minmax_nocb (
     ----------
     p_ds_ax :                       ax
                                     An ax for the figure as returned by plt.subplots.
-    p_ds_name :                     tr
+    p_ds_name :                     str
                                     Name of the dataset e.g. CMEMS or MITgcm.
     p_ds_var :                      MaskedArray
                                     The variable to plot the map of as extracted from the NetCDF dataset.
