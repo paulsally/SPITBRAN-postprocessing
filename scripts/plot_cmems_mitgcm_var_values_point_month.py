@@ -28,7 +28,7 @@ importlib.reload(my_nc_utilities)
 #%% 
 ## Get target date and variable and set defaults
 target_date = my_sys_utilities.get_target_date(
-    "201301",
+    "201211",
     "YYYYMM",
 )
 target_var = my_sys_utilities.get_target_var(
@@ -83,7 +83,7 @@ matplotlib.rcParams['webagg.open_in_browser'] = False
 fig = plt.figure(num=1, figsize=(10, 6), dpi=100)
 fig.clf()
 ax = fig.add_subplot(111)  
-line1, = ax.plot(c_time, c_var, marker=".", linestyle="solid", color=f"{spitbran_config.cfg_colours['ref']}", label="CMEMS")
+line1, = ax.plot(c_time, c_var, marker=".", linestyle="solid", color=f"{spitbran_config.cfg_colours['c-rean']}", label="CMEMS Reanalysis")
 line2, = ax.plot(m_time, m_var, marker=".", linestyle="solid", color=f"{spitbran_config.cfg_colours['model']}", label="MITgcm-BFM")
 if m_var_d:
     line3, = ax.plot(c_time, m_var_d, marker=".", linestyle="solid", color=f"{spitbran_config.cfg_colours['model_avg']}", label="MITgcm-BFM - Daily Avg")
@@ -93,7 +93,7 @@ ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M'))
 ax.xaxis.set_major_locator(mdates.AutoDateLocator())
 
 # Add title, labels, and grid
-fig.suptitle(f"Curve for var {c_var_long_name} ({c_var_units}) for the Month {target_date}")
+fig.suptitle(f"Curve for var {c_var_long_name} ({c_var_units}) for the Month {target_date} at point {spitbran_config.cfg_latitude}, {spitbran_config.cfg_longitude}")
 
 ax.set_xlabel("Date")
 ax.set_ylabel(f"{target_var} ({c_var_units})")
