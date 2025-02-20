@@ -107,7 +107,7 @@ def get_files_by_keystring_in_fn(p_ds_type, p_root_dir, p_var_fn_mapped, p_key_d
     matches :                   list
                                 List of files that contain the key string in the file name.
     """
-    root_path = Path(p_root_dir)
+    root_path = Path(p_root_dir).expanduser().resolve()
     # year_pattern = re.compile(r"^\d{4}$")
     if p_ds_type == "c-rean":
         # Test for file name 

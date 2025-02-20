@@ -1,5 +1,3 @@
-from pathlib import Path
-
 # Colours
 cfg_colours = {
     "c-rean": "#76C893",
@@ -15,8 +13,8 @@ cfg_depth_index = 0
 # Set the paths to CMEMS and MITgcm-BFM base data directory
 cfg_data_base_dirs = {
     #"c-rean": r"/OCEANASTORE/database/CMEMS/rean-d",
-    "c-rean": Path(r"~/SPITBRAN/DATA/CMEMS/rean-d").expanduser(),
-    "m": Path(r"/OCEANASTORE/progetti/spitbran2/MITgcm_products/outputs").expanduser(),
+    "c-rean": "~/SPITBRAN/DATA/CMEMS/rean-d",
+    "m": "/OCEANASTORE/progetti/spitbran2/MITgcm_products/outputs"
 }
 
 # Set associations between variable name and file name
