@@ -70,4 +70,3 @@ def on_pick(event, lines, legend, fig):
             line.set_visible(visible)
             legend_item.set_alpha(1.0 if visible else 0.2)  # Dim the legend item if the line is hidden
             fig.canvas.draw_idle()
-            print(f"Line visibility toggled: {line.get_label()} -> {'Visible' if visible else 'Hidden'}")

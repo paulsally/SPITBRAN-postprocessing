@@ -17,13 +17,6 @@ def get_cwd():
                                 Current Working Directory for script
 
     """
-    # if hasattr(sys, "ps1"):
-    #     cwd = Path.cwd() # interactive window
-    # else:
-    #     cwd = str(Path(__file__).resolve().parent.parent) # command line
-    # # Add the script parent directory to sys.path to allow importing lib in command line execution mode
-    # if str(cwd) not in sys.path:
-    #     sys.path.append(str(cwd))
     try:
         get_ipython()  # Jupyter or IPython environment
         cwd = Path.cwd()  # interactive window
@@ -109,14 +102,17 @@ def get_files_by_keystring_in_fn(p_ds_type, p_root_dir, p_var_fn_mapped, p_key_d
     """
     root_path = Path(p_root_dir).expanduser().resolve()
     # year_pattern = re.compile(r"^\d{4}$")
-    if p_ds_type == "c-rean":
+    if (
+        p_ds_type == "c-rean"
+    ):
         # Test for file name 
-        #   starting with 5 characters (cmems) excluding digits
+        #   starting with 5 characters (e.g. "cmems") excluding digits
         #   containing the target variable name
         pattern = re.compile(fr"^[^\d]{{5}}_{p_var_fn_mapped}-.*_{p_key_date_string}[^()]*\.nc$")
-        # print(pattern)
+    elif p_ds_type == "c-obs":
+        pattern = re.compile(fr"^[^\d]{{5}}_{p_var_fn_mapped}-.*_{p_key_date_string}[^()]*\.nc$")
     elif p_ds_type == "m":
-        # Test for file name 
+        # Test for file name:
         #   starting with 6 digits which is the target date and may be 4 or 6 digits long
         #   containing the target variable name
         if len(p_key_date_string) == 6:
@@ -125,12 +121,9 @@ def get_files_by_keystring_in_fn(p_ds_type, p_root_dir, p_var_fn_mapped, p_key_d
             pattern = re.compile(fr"^{p_key_date_string}_.*--{p_var_fn_mapped}-[^()]*\.nc$")
         else:
             raise ValueError("Invalid date")
-        # pattern = re.compile(fr"^{p_key_date_string}\d{{2}}|{p_key_date_string}\d{{0}}_.*--{p_var_fn_mapped}-[^()]*\.nc$")
-        # print(pattern)
     else:
         raise ValueError("Invalid dataset type")
-
-    # Check if key string is found in the file name and the filename is inside a directory corresponding to a year (i.e. all directories that contains other than 4 digits are discarded)
+    
     matches = [
         item
         for item in root_path.rglob("*")
@@ -158,5 +151,5 @@ def get_files_by_keystring_in_fn(p_ds_type, p_root_dir, p_var_fn_mapped, p_key_d
     #                 matches.append(subitem)
     #                 print(subitem)
     # print(f"matches: {sorted(matches)}")
-
+    # print(f"p_ds_type:{p_ds_type} - len matches: {len(matches)}")
     return sorted(matches)

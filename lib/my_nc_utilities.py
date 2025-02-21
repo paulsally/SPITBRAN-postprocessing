@@ -75,15 +75,15 @@ def get_values_in_point_with_time_given_month(
     Parameters
     ----------
     p_ds_type :                 str
-                                String corresponding to the type of dataset (c for CMEMS, m for MITgcm-BFM).
+                                String corresponding to the type of dataset (c-rean for CMEMS Reanalysis, c-obs for CMEMS Observations, m for MITgcm-BFM).
     p_data_base_dir :           str
-                                String corresponding to the path where data files are located.
+                                String corresponding to the path where data files are located (set in Config file).
     p_target_date :             str
                                 Target date in the format YYYYMM.
     p_var :                     str
-                                Varibale to extract from the data files.
+                                Variable to extract from the data files.
     p_var_fn_mapped :           str
-                                Mapped variable name as per the config file (as it shows in data filenames).
+                                Mapped variable name as per config file (as it shows in datasets filename).
     p_latitude :                float
                                 Degrees North latitude.
     p_longitude :               float
@@ -131,6 +131,9 @@ def get_values_in_point_with_time_given_month(
                     p_latitude, 
                     p_longitude
                 )
+                var_units = ds.variables[p_var].units
+                var_long_name = ds.variables[p_var].long_name
+
                 # Get time defaults (base reference time and time unit)
                 time_base, time_unit = get_time_defaults(ds)
 
@@ -138,13 +141,20 @@ def get_values_in_point_with_time_given_month(
             new_time = [time_base + timedelta(**{time_unit: int(t)}) for t in time]
             x.extend(new_time)
 
-            if p_ds_type == "c-rean":
-                var_units = ds.variables[p_var].units
-                var_long_name = ds.variables[p_var].long_name
-              
-            # Extract variable values for the given depth, lat and lon (cell)
+            # Extract variable values for the given depth, lat and lon (point)
             # print(ds.variables.keys())
-            var_values = ds.variables[p_var][:, p_depth_index, lat_idx, lon_idx]
+            # print(ds.variables[p_var].dimensions)
+            if (
+                p_ds_type == "c-rean" or
+                p_ds_type == "m"
+            ):
+                var_values = ds.variables[p_var][:, p_depth_index, lat_idx, lon_idx]
+            elif p_ds_type == "c-obs":
+                var_values = ds.variables[p_var][:, lat_idx, lon_idx]
+            
+            if var_units and "kelvin" in var_units.lower():
+                var_values -= 273.15  # Convert to Celsius
+            
             y.extend(var_values)
 
             # Compute average daily variable values
@@ -154,10 +164,7 @@ def get_values_in_point_with_time_given_month(
 
         i += 1
 
-    if p_ds_type == "c-rean":
-        return x, y, var_long_name, var_units
-    elif p_ds_type == "m":
-        return x, y, y_d
+    return x, y, y_d, var_long_name, var_units
 
    
 def get_values_map_specific_day(
@@ -172,18 +179,18 @@ def get_values_map_specific_day(
     Parameters
     ----------
     p_ds_type :                 str
-                                String corresponding to the type of dataset (c for CMEMS, m for MITgcm-BFM).
+                                String corresponding to the type of dataset (c-rean for CMEMS Reanalysis, c-obs for CMEMS Observations, m for MITgcm-BFM).
     p_data_base_dir :           str
                                 String corresponding to the path where data files are located.
     p_target_date :             str
-                                Target date in the format YYYYMM.
+                                Target date in the format YYYYMMDD.
     p_var_fn_mapped :           str
-                                Mapped variable name as per the config file (as it shows in data filenames).
+                                Mapped variable name as per config file (as it shows in datasets filename).
 
 
     Returns
     -------
-    ds :                        a netCDF4.Dataset object
+    ds :                        A netCDF4.Dataset object
                                 The dataset object to plot.
     """
 

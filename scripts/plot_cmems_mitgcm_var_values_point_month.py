@@ -32,86 +32,153 @@ target_date = my_sys_utilities.get_target_date(
     "YYYYMM",
 )
 target_var = my_sys_utilities.get_target_var(
-    "thetao",
+    "temp",
 )
-
-
-#%%
-## Map the target variable to corresponding variable names in CMEMS and MITgcm-BFM files
-target_var_fn_mapped = {}
-target_var_fn_mapped["c-rean"] = spitbran_config.cfg_var_filename_map[target_var]["c-rean"]
-target_var_fn_mapped["m"] = spitbran_config.cfg_var_filename_map[target_var]["m"]
 
 
 # %% 
 ## Search data directories for files related to target month
-# CMEMS
-c_time, c_var, c_var_long_name, c_var_units = my_nc_utilities.get_values_in_point_with_time_given_month(
-    "c-rean",
-    spitbran_config.cfg_data_base_dirs["c-rean"],
-    target_date,
-    target_var,
-    target_var_fn_mapped["c-rean"],
-    spitbran_config.cfg_latitude,
-    spitbran_config.cfg_longitude,
-    spitbran_config.cfg_depth_index,
-)
-# MITgcm-BFM
-m_time, m_var, m_var_d = my_nc_utilities.get_values_in_point_with_time_given_month(
-    "m",
-    spitbran_config.cfg_data_base_dirs["m"],
-    target_date,
-    target_var,
-    target_var_fn_mapped["m"],
-    spitbran_config.cfg_latitude,
-    spitbran_config.cfg_longitude,
-    spitbran_config.cfg_depth_index,
-    True,
-)
+# # CMEMS
+# c_rean_time, c_rean_var, c_rean_var_long_name, c_rean_var_units = my_nc_utilities.get_values_in_point_with_time_given_month(
+#     "c-rean",
+#     spitbran_config.cfg_data_base_dirs["c-rean"],
+#     target_date,
+#     spitbran_config.cfg_var_name["temp"]["c-rean"],
+#     spitbran_config.cfg_var_filename_m[target_var]["c-rean"],
+#     spitbran_config.cfg_latitude,
+#     spitbran_config.cfg_longitude,
+#     spitbran_config.cfg_depth_index,
+# )
 
+# c_obs_time, c_obs_var, c_obs_var_long_name, c_obs_var_units = my_nc_utilities.get_values_in_point_with_time_given_month(
+#     "c-obs",
+#     spitbran_config.cfg_data_base_dirs["c-obs"],
+#     target_date,
+#     spitbran_config.cfg_var_name["temp"]["c-obs"],
+#     spitbran_config.cfg_var_filename_map[target_var]["c-obs"],
+#     spitbran_config.cfg_latitude,
+#     spitbran_config.cfg_longitude,
+#     spitbran_config.cfg_depth_index,
+# )
+# # MITgcm-BFM
+# m_time, m_var, m_var_d = my_nc_utilities.get_values_in_point_with_time_given_month(
+#     "m",
+#     spitbran_config.cfg_data_base_dirs["m"],
+#     target_date,
+#     target_var,
+#     spitbran_config.cfg_var_filename_map[target_var]["m"],
+#     spitbran_config.cfg_latitude,
+#     spitbran_config.cfg_longitude,
+#     spitbran_config.cfg_depth_index,
+#     True,
+# )
+
+
+# Disable automatic browser opening
+matplotlib.rcParams['webagg.open_in_browser'] = False
 
 # %%
 ## Reset settinngs and close any previous plots
 plt.rcdefaults()
 plt.close('all')
-# Disable automatic browser opening
-matplotlib.rcParams['webagg.open_in_browser'] = False
 
 
-# %%
 ## Plot the curves
 fig = plt.figure(num=1, figsize=(10, 6), dpi=100)
 fig.clf()
 ax = fig.add_subplot(111)  
-line1, = ax.plot(c_time, c_var, marker=".", linestyle="solid", color=f"{spitbran_config.cfg_colours['c-rean']}", label="CMEMS Reanalysis")
-line2, = ax.plot(m_time, m_var, marker=".", linestyle="solid", color=f"{spitbran_config.cfg_colours['model']}", label="MITgcm-BFM")
-if m_var_d:
-    line3, = ax.plot(c_time, m_var_d, marker=".", linestyle="solid", color=f"{spitbran_config.cfg_colours['model_avg']}", label="MITgcm-BFM - Daily Avg")
+
+var_time = {}
+var_time_d = {}
+var_values = {}
+var_long_name = {}
+var_units = {}
+var_daily_values = {}
+
+for data_type in spitbran_config.cfg_data_base_dirs.keys():
+    # print(
+    #     data_type,
+    #     spitbran_config.cfg_data_base_dirs[data_type],
+    #     target_date,
+    #     spitbran_config.cfg_var_name[target_var][data_type],
+    #     spitbran_config.cfg_var_filename_map[target_var][data_type],
+    #     spitbran_config.cfg_latitude,
+    #     spitbran_config.cfg_longitude,
+    #     spitbran_config.cfg_depth_index,
+    #     calclulate_day_avg
+    # )
+
+    #var_time, var_values, var_long_name, var_units = my_nc_utilities.get_values_in_point_with_time_given_month(
+    var_time[data_type], var_values[data_type], var_daily_values[data_type], var_long_name[data_type], var_units[data_type] = my_nc_utilities.get_values_in_point_with_time_given_month(
+        data_type,
+        spitbran_config.cfg_data_base_dirs[data_type],
+        target_date,
+        spitbran_config.cfg_var_name[target_var][data_type],
+        spitbran_config.cfg_var_filename_map[target_var][data_type],
+        spitbran_config.cfg_latitude,
+        spitbran_config.cfg_longitude,
+        spitbran_config.cfg_depth_index,
+        spitbran_config.cfg_var_d_values[target_var][data_type],
+    )
+
+    # if calclulate_day_avg:
+    #     var_time[data_type], var_values[data_type], var_daily_values[data_type] = result
+    # else:
+    #     var_time[data_type], var_values[data_type], var_long_name[data_type], var_units[data_type] = result
+    # var_time[data_type], var_values[data_type], var_daily_values[data_type], var_long_name[data_type], var_units[data_type] = result
+
+
+lines = []
+for key, label in spitbran_config.cfg_datasets.items():
+    line, = ax.plot(
+        var_time[key], var_values[key],
+        marker=".", linestyle="solid",
+        color=spitbran_config.cfg_colours[key],
+        label=label
+    )
+    lines.append(line)
+
+# Check if daily values should be plotted
+if spitbran_config.cfg_var_d_values_flag[target_var][data_type]:
+    var_time["m-d"] = var_time["c-rean"]
+    line, = ax.plot(
+        var_time["m-d"], var_daily_values["m"],
+        marker=".", linestyle="solid",
+        color=spitbran_config.cfg_colours["m_avg"],
+        label="MITgcm-BFM - Daily Avg"
+    )
+    lines.append(line)
 
 # Format the x-axis dates
 ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M'))
 ax.xaxis.set_major_locator(mdates.AutoDateLocator())
 
 # Add title, labels, and grid
-fig.suptitle(f"Curve for var {c_var_long_name} ({c_var_units}) for the Month {target_date} at point {spitbran_config.cfg_latitude}, {spitbran_config.cfg_longitude}")
+fig.suptitle(f"Curve for var {target_var} ({var_units['c-rean']}) for the Month {target_date} at point {spitbran_config.cfg_latitude}, {spitbran_config.cfg_longitude}")
 
 ax.set_xlabel("Date")
-ax.set_ylabel(f"{target_var} ({c_var_units})")
+# ax.set_ylabel(f"{target_var} ({c_rean_var_units})")
+ax.set_ylabel(f"{var_units['c-rean']}")
 ax.grid(True)
 
 
 # %%
+
+# # Enable picking on the actual plotted lines
+
+# OR (if lines is a list)
+for line in lines:
+    line.set_picker(True)
 ## Add an interactive legend
 legend = ax.legend(loc="upper right", title="Click to toggle visibility", fancybox=True)
-lines = [line1, line2]
-if m_var_d:
-    lines.append(line3)
 # Enable picking on legend items
 for legend_line in legend.get_lines():
     legend_line.set_picker(True)
     # print(f"Legend item picker enabled: {legend_line.get_label()}")
 
+
 # Connect the pick event to the toggle function
+# print("Connecting pick event...")
 fig.canvas.mpl_connect('pick_event', lambda event: my_plot_utilities.on_pick(event, lines, legend, fig))
 # Debug: Check if the event connection works
 # print("Event connections established. Ready to show the plot.")
