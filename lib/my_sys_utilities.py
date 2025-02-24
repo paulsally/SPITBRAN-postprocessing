@@ -1,28 +1,29 @@
 import sys
 from pathlib import Path
 import re
-from IPython import get_ipython
 
-def get_cwd():
-    """
-    Gets the value of the Current Working Directory according to whether the script is run interactively or via command line
+# from IPython import get_ipython
 
-    Parameters
-    ----------
-    None
+# def get_cwd():
+#     """
+#     Gets the value of the Current Working Directory according to whether the script is run interactively or via command line
 
-    Returns
-    -------
-    cwd:                        Path
-                                Current Working Directory for script
+#     Parameters
+#     ----------
+#     None
 
-    """
-    try:
-        get_ipython()  # Jupyter or IPython environment
-        cwd = Path.cwd()  # interactive window
-    except NameError:
-        cwd = str(Path(__file__).resolve().parent.parent)  # command line
-    return cwd
+#     Returns
+#     -------
+#     cwd:                        Path
+#                                 Current Working Directory for script
+
+#     """
+#     try:
+#         get_ipython()  # Jupyter or IPython environment
+#         cwd = Path.cwd()  # interactive window
+#     except NameError:
+#         cwd = str(Path(__file__).resolve().parent.parent)  # command line
+#     return cwd
 
 
 def get_target_date (

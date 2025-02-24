@@ -1,8 +1,8 @@
 # MITgcm-BFM postprocessing
 
-MITgcm-BFM postprocessing contains scripts for comparing model output files with Copernicus Marine data.
+MITgcm-BFM postprocessing contains scripts for comparing model output files with Copernicus Marine data (Reanalysis and Observations).
 - plot_cmems_mitgcm_var_values_point_month.py 
-    - plots the evolution in time of the values of a variable of interest in one point. The script has been tested with var thetao and so (cur requires further development being a 2D)
+    - plots the evolution in time of the values of a variable of interest in one point. The script has been tested with var temp (thetao in CMEMS Reanalysis and MITgcm and analysed_sst in CMEMS Observations)
 
 ## Prerequisites
 - Create a conda environment with the following packages:
@@ -19,6 +19,7 @@ MITgcm-BFM postprocessing contains scripts for comparing model output files with
 ```python
 cfg_data_base_dirs = {
     "c-rean": r"/OCEANASTORE/database/CMEMS/rean-d",
+    "c-obs": r"~/SPITBRAN/DATA/CMEMS/obs",
     "m": r"/OCEANASTORE/progetti/spitbran2"
 }
 ```
@@ -27,7 +28,7 @@ cfg_data_base_dirs = {
         - In this case the script asks to input the required variable values (if data is not found no error is handled gracefully this needs more development)
     - Via command line pass the variables values as arguments, e.g.: 
         ```python
-        python plot_cmems_mitgcm_var_values_point_month.py 201301 thetao
+        python plot_cmems_mitgcm_var_values_point_month.py 201211 temp
         ```
 
 # Expected results

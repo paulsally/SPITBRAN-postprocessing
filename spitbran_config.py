@@ -34,7 +34,8 @@ cfg_var_name = {
     },
     "so": {
         "c-rean": "so",
-        "m": "PSAL",
+        "c-obs": "--",
+        "m": "so",
     },
 }
 # Set associations between variable name and file name
