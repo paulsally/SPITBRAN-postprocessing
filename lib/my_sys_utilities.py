@@ -116,7 +116,9 @@ def get_files_by_keystring_in_fn(p_ds_type, p_root_dir, p_var_fn_mapped, p_key_d
         # Test for file name:
         #   starting with 6 digits which is the target date and may be 4 or 6 digits long
         #   containing the target variable name
-        if len(p_key_date_string) == 6:
+        if len(p_key_date_string) == 4:
+            pattern = re.compile(fr"^{p_key_date_string}\d{{4}}_.*--{p_var_fn_mapped}-[^()]*\.nc$")
+        elif len(p_key_date_string) == 6:
             pattern = re.compile(fr"^{p_key_date_string}\d{{2}}_.*--{p_var_fn_mapped}-[^()]*\.nc$")
         elif len(p_key_date_string) == 8:
             pattern = re.compile(fr"^{p_key_date_string}_.*--{p_var_fn_mapped}-[^()]*\.nc$")
