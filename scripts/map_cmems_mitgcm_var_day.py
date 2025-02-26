@@ -2,6 +2,21 @@
 ## Imports and setup
 # %%
 import matplotlib.pyplot as plt
+from IPython import get_ipython
+import sys
+from pathlib import Path
+
+# %% 
+## Get current working directory
+# cwd = my_sys_utilities.get_cwd()
+try:
+    get_ipython()  # Jupyter or IPython environment
+    cwd = Path.cwd()  # interactive window
+    if sys.stdin and sys.stdin.isatty():
+        cwd = str(Path(__file__).resolve().parent.parent)  # command line
+        sys.path.append(cwd)
+except NameError:
+    cwd = str(Path(__file__).resolve().parent.parent)  # command line
 
 # %% [markdown]
 ### Import local settings and liabraries
@@ -11,10 +26,6 @@ from lib import my_sys_utilities
 from lib import my_nc_utilities
 from lib import my_plot_utilities
 
-#%% [markdown]
-### Get current working directory
-#%%
-cwd = my_sys_utilities.get_cwd()
 
 #%% [markdown]
 ### Reload modules (comment for performance, uncomment for development i.e. when editing the modules)
@@ -32,7 +43,7 @@ target_date = my_sys_utilities.get_target_date(
     "YYYYMMDD",
 )
 target_var = my_sys_utilities.get_target_var(
-    "thetao",
+    "temp",
 )
 
 #%% [markdown]
@@ -129,7 +140,7 @@ cbar = fig.colorbar(
     c_rean_im, 
     ax=axs, 
     orientation="vertical", 
-    label=f"{target_var} ({m_ds.variables[target_var].units})", 
+    label=f"{target_var} ({m_ds.variables[spitbran_config.cfg_var_name[target_var]['c-rean']].units})", 
     shrink=0.8
 )
 
