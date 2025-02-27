@@ -1,3 +1,23 @@
+"""
+Script Name: plot_var_values_point_month.py
+Author: Sara Polselli
+Date: 2025-02-27
+Description:
+    This script is used to see how a variable at a given point changes with time in the 3 datasets (CMEMS Reanalysis, CMEMS Observation, MITgcm output).
+    Lat, lon and depth index are fixed (set in config file).
+    
+    Features:
+    For each dataset (c-rean, c-obs and m):
+    - Reads NetCDF data (time and variable values at given depth and coordinates for given month)
+    - Creates time curves using matplotlib. Tested with temp (thetao) and salinity (so)
+    - Using webAgg backend, provides a link to localhost address for interactive legend to toggle visibility of curves
+    - Saves output figure file (.png)
+    
+Usage:
+    python plot_var_values_point_month.py 20130101 temp
+    python plot_var_values_point_month.py 20130101 so
+    or interactively via VSCode or Jupyter and insert the date and variable when prompted
+"""
 # %%
 ## Import libraries
 import matplotlib
@@ -59,7 +79,7 @@ var_long_name = {}
 var_units = {}
 var_daily_values = {}
 for data_type in spitbran_config.cfg_datasets.keys():
-    if (data_type != "c-obs"):
+    if not(data_type == "c-obs" and target_var == "so"):
         var_time[data_type], var_values[data_type], var_daily_values[data_type], var_long_name[data_type], var_units[data_type] = my_nc_utilities.get_values_in_point_with_time_given_month(
             data_type,
             spitbran_config.cfg_data_base_dirs[data_type],
@@ -73,7 +93,7 @@ for data_type in spitbran_config.cfg_datasets.keys():
         )
 
 # %%
-## Reset settinngs and close any previous plots
+## Reset settings and close any previous plots
 plt.rcdefaults()
 plt.close('all')
 
@@ -83,14 +103,15 @@ fig.clf()
 ax = fig.add_subplot(111)  
 
 lines = []
-for key, label in spitbran_config.cfg_datasets.items():
-    line, = ax.plot(
-        var_time[key], var_values[key],
-        marker=".", linestyle="solid",
-        color=spitbran_config.cfg_colours[key],
-        label=label
-    )
-    lines.append(line)
+for data_type, label in spitbran_config.cfg_datasets.items():
+    if not(data_type == "c-obs" and target_var == "so"):
+        line, = ax.plot(
+            var_time[data_type], var_values[data_type],
+            marker=".", linestyle="solid",
+            color=spitbran_config.cfg_colours[data_type],
+            label=label
+        )
+        lines.append(line)
 
 ## Check if daily values should be plotted
 if spitbran_config.cfg_var_d_values_flag[target_var]["m"]:

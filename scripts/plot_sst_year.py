@@ -19,6 +19,7 @@ else:                                  # Interactive window
 
 # Add the parent directory of the script to sys.path to allow working in command line mode
 sys.path.append(cwd)
+import spitbran_config
 from lib import my_sys_utilities
 
 # Check if requested date is a valid date
@@ -90,8 +91,21 @@ for m_data_search_dir_item in matches_m:
 
 # Plot the temperature curves
 plt.figure(figsize=(10, 6))
-plt.plot(c_dates, c_temperatures, marker='o', linestyle='-', color='b', label="CMEMS SST")
-plt.plot(c_dates, m_temperatures, marker='x', linestyle='--', color='g', label="MITgcm-BFM")
+plt.plot(
+    c_dates, 
+    c_temperatures, 
+    marker='.', 
+    linestyle='-', 
+    color=f"{spitbran_config.cfg_colours['c-rean']}", 
+    label="CMEMS SST"
+)
+plt.plot(
+    c_dates, 
+    m_temperatures, 
+    marker='.', 
+    linestyle='-', 
+    color=f"{spitbran_config.cfg_colours['m']}", 
+    label="MITgcm-BFM SST")
 
 # Add title, labels, and grid
 plt.title(f"Temperature Curve (Thetao) for the Year {requested_date}")

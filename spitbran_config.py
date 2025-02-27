@@ -1,4 +1,4 @@
-# Geo Location and depth
+# Geo Location and depth (for plotting time series)
 cfg_latitude = 44.0
 cfg_longitude = 9.0
 cfg_depth_index = 0

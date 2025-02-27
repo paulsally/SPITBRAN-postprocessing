@@ -1,3 +1,23 @@
+"""
+Script Name: map_cmems_mitgcm_var_day.py
+Author: Sara Polselli
+Date: 2025-02-27
+Description:
+    This script is used to create side by side maps of the required variable for comparing CMEMES Reanalysis and MITgcm-BFM datasets at given date.
+    It generates maps of the data (using depth 0 for CMEMES dataset and values linearly interpolated between depth 0 and 1 for MITgcm-BFM dataset).
+    
+    Features:
+    For each dataset (c-rean and m):
+    - Reads NetCDF data (time, variable, depth, and coordinates)
+    - Creates side by side maps using matplotlib. Tested with temp (thetao) and salinity (so)
+    - Saves output figure file (.png)
+    
+Usage:
+    python map_cmems_mitgcm_var_day.py 20130101 temp
+    python map_cmems_mitgcm_var_day.py 20130101 so
+    or interactively via VSCode or Jupyter and insert the date and variable when prompted
+"""
+
 # %% [markdown]
 ## Imports and setup
 # %%
@@ -19,7 +39,7 @@ except NameError:
     cwd = str(Path(__file__).resolve().parent.parent)  # command line
 
 # %% [markdown]
-### Import local settings and liabraries
+### Import local settings and libraries
 #%%
 import spitbran_config
 from lib import my_sys_utilities
@@ -47,7 +67,7 @@ target_var = my_sys_utilities.get_target_var(
 )
 
 #%% [markdown]
-### For each type of data (c or m) 
+### For each type of data (c-rean or m) 
 #   - load netCDF file and get the values for var
 #   - plot the maps
 #%%
@@ -67,29 +87,31 @@ m_ds = my_nc_utilities.get_values_map_specific_day(
 )
 
 # %%
-# Extract var data at the target time and depth indecies
+# Extract var data at the target time and depth indices 0 and 1
 # print(c_ds.variables.keys())
-# print(m_ds.variables['thetao'].dimensions)
-c_rean_var = c_rean_ds.variables['thetao'][0, 0, :, :]  # ('time', 'depth', 'latitude', 'longitude')
-# print(m_ds.variables['thetao'].dimensions)
+# print(m_ds.variables[spitbran_config.cfg_var_name[target_var][data_type]].dimensions)
+c_rean_var = c_rean_ds.variables[spitbran_config.cfg_var_name[target_var]["c-rean"]][0, 0, :, :]  # ('time', 'depth', 'latitude', 'longitude')
+# print(m_ds.variables[spitbran_config.cfg_var_name[target_var][data_type]].dimensions)
 
 # MITgcm: 3-hourly outputs so need to take average of the 8 values per day
 # First and second layer
-m_var_d0 = m_ds.variables['thetao'][:, 0, :, :].mean(axis=0)
-m_var_d1 = m_ds.variables['thetao'][:, 1, :, :].mean(axis=0)
-# m_ds.variables['thetao'].dimensions
-# units = m_ds.variables['thetao'].units
+m_var_d0 = m_ds.variables[spitbran_config.cfg_var_name[target_var]["m"]][:, 0, :, :].mean(axis=0)
+m_var_d1 = m_ds.variables[spitbran_config.cfg_var_name[target_var]["m"]][:, 1, :, :].mean(axis=0)
+# m_ds.variables[spitbran_config.cfg_var_name[target_var][data_type]].dimensions
+# units = m_ds.variables[spitbran_config.cfg_var_name[target_var][data_type]].units
 
 # Interpolate data of MITgcm output between depth 0 and depth 1
 #   m_ds.variables['depth'][:]
 #   0.75 m (first layer i.e. with depth index 0) and
 #   2.25 m (second layer i.e. with depth index 1)
 #   assuming linear interpolation
-int_factor = (1.01 - 0.75) / (2.25 - 0.75)
+depth_0 = 0.75
+depth_1 = 2.25
+int_factor = (1.01 - depth_0) / (depth_1 - depth_0)
 m_var_d0_int = (1 - int_factor) * m_var_d0 + int_factor * m_var_d1
 
 # %%
-# Compute element-wise comparison of m sst at first and second layer
+# Compute element-wise comparison of m var at first and second layer
 # m_var_d0_m_var_d1 = m_var_d0 == m_var_d1
 # Save to a text file
 # np.savetxt("m_var_d0_m_var_d1.txt", m_var_d0_m_var_d1, fmt='%s')
@@ -113,7 +135,7 @@ var_max = spitbran_config.cfg_var_min_max[target_var]["c-rean"][1]
 fig, axs = plt.subplots(1, 2, figsize=(12, 6), constrained_layout=True)
 fig.suptitle(f"{target_var} - {target_date} - day average")
 
-# Plot the first dataset (c Rean vor var - daily)
+# Plot the first dataset (c Rean var - daily)
 c_rean_im = my_plot_utilities.plot_map_minmax_nocb(
     axs[0],
     "CMEMS Reanalysis\n(depth 0 i.e. mt=1.01)",

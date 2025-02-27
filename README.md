@@ -1,8 +1,14 @@
 # MITgcm-BFM postprocessing
 
 MITgcm-BFM postprocessing contains scripts for comparing model output files with Copernicus Marine data (Reanalysis and Observations).
-- plot_cmems_mitgcm_var_values_point_month.py 
-    - plots the evolution in time of the values of a variable of interest in one point. The script has been tested with var temp (thetao in CMEMS Reanalysis and MITgcm and analysed_sst in CMEMS Observations)
+- map_var_compare_layers.py
+    - plots maps side by side of variable of interest at depth index 0 and depth index 1. Tested with temperature (input temp for thetao) and salinity (input so). Also plots map of difference.
+- map_var_day.py
+    - plots maps side by side of CMEMS Reanalysis and MITgcm-BFM output. Tested with temp and so.
+-plot_sst_year.py
+    - plots evolution in time of sst for given year.
+- plot_var_values_point_month.py 
+    - plots the evolution in time of the values of a variable of interest in one point. Tested with var temp (thetao in CMEMS Reanalysis and MITgcm and analysed_sst in CMEMS Observations) and so (salinity).
 
 ## Prerequisites
 - Create a conda environment with the following packages:
@@ -24,14 +30,22 @@ cfg_data_base_dirs = {
     "m": r"/OCEANASTORE/progetti/spitbran2"
 }
 ```
-- Run script:
+- Run scripts:
     - Interactively: Open the python script and run it in interactive window either via Visual Studio Code or on the Jupyter web innterface
-        - In this case the script asks to input the values of required variables (if data is not found no error is handled gracefully this needs more development)
+        - In this case the script prompts to input the values of required variables (if data is not found no error is handled gracefully this needs more development)
     - Via command line pass the variables values as arguments, e.g.: 
         ```python
-        python plot_cmems_mitgcm_var_values_point_month.py 201211 temp
+        python plot_var_values_point_month.py 201211 temp
         ```
 
 # Expected results
-The script provides a link to open the result on a web page. This has the advantage of providing a certain degree of interactivity where the visibility of the curves can be toggled by clicking on the corresponding line in the legend.
-The script also saves the result in a static image.
+- map_var_compare_layers.py 
+    - side by side maps of first and second layers for comparison of cmems reanalysis and MITgcm at given day. 
+    - single static images (.png) of each layer for later comparison using an image/file comparison tool
+    - comparison map for both cmems reanalysis and MITgcm run
+    Tested with temp (thetao) and salinity (so).
+- map_var_day.py 
+    - maps side by side of cmems reanalysis and MITgcm on given day 
+- plot_var_values_point_month.py 
+    - provides a link to open the result on a web page on localhost (needs portforwarding if not done automatically). This, i.e. the use of matplotlib.use('webAgg') has the advantage of providing a certain degree of interactivity where the visibility of the curves can be toggled by clicking on the corresponding line in the legend.
+    - static image (.png) of the same plot.

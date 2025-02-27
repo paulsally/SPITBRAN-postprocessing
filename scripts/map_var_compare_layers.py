@@ -4,27 +4,23 @@ Script Name: map_cmems_mitgcm_var_compare_layers.py
 Author: Sara Polselli
 Date: 2025-02-27
 Description:
-    This script processes oceanographic data from NetCDF files, extracts temperature 
-    profiles, and generates visualizations of the data. 
-    Default variable is temperature (thetao) and default date is 20130101.
-    Defaults can be changed by providing the date and variable as command line arguments or at runtime in interactive mode.
+    This script is used to compare variable values at depth 0 and depth 1 from NetCDF files of the datasets set in the config file.
+    The c-obs dataset is not included in the comparison as it does not have layers but only sst.
+    It generates maps of the data at given date and depth.
     
     Features:
-    - Reads NetCDF data (temperature, depth, and coordinates)
+    For each dataset:
+    - Reads NetCDF data (time, variable, depth, and coordinates)
     - Creates side by side maps using matplotlib of layer 1 and layer 2 (depth 0 and 1) of required variable. Tested with temp (thetao) and salinity (so)
-    - Saves output figures in single files for comparison using image comparison tools
-    - Computes element-wise comparison of the two layers and plots the difference map (d0 - d1)
-    
+    - Saves output figures in single files (.png) for comparison using image comparison tools
+    - Computes element-wise comparison of the two layers and plots the difference map (d0 - d1) and creates a map of the difference
+    - Optionally prints the min and max values of the variable for debug purposes
+
 Usage:
     python map_cmems_mitgcm_var_compare_layers.py 20130101 temp
     python map_cmems_mitgcm_var_compare_layers.py 20130101 so
     or interactively via VSCode or Jupyter and insert the date and variable when prompted
 """
-
-import numpy as np
-import matplotlib.pyplot as plt
-from netCDF4 import Dataset
-import sys
 
 # %% [markdown]
 ## Imports and setup
@@ -157,9 +153,6 @@ for data_type in spitbran_config.cfg_datasets.keys():
 
         # Save image
         fig.savefig(rf"{cwd}/IMAGES/{target_var}-{target_date}--{var_min_across_layers}-{var_max_across_layers}--{data_type}--d0-d1.png", dpi=300, bbox_inches='tight')
-        
-        # Display the plots
-        fig.show()
 
         # Save each plot as a single image to be able to compare them side by side or with adequate image comparing software
         # Heading has been removed so that when comparing files with a comparison tool the images are not considered different only because of the heading
@@ -229,3 +222,6 @@ for data_type in spitbran_config.cfg_datasets.keys():
 
         # Save image
         fig_d0_d1_diff.savefig(rf"{cwd}/IMAGES/{target_var}--{target_date}--{var_min_across_layers}-{var_max_across_layers}--{data_type}--d0-d1-diff.png", dpi=300, bbox_inches='tight')
+
+# Display the plots
+plt.show()
