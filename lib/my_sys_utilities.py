@@ -77,7 +77,7 @@ def get_target_var (
         if len(sys.argv) > 2:
             target_var = sys.argv[2]
         else:
-            sys.exit(f"Some arguments are missing.")
+            sys.exit(f"Some arguments are missing (function get_target_var).")
     return target_var
 
 
@@ -123,9 +123,9 @@ def get_files_by_keystring_in_fn(p_ds_type, p_root_dir, p_var_fn_mapped, p_key_d
         elif len(p_key_date_string) == 8:
             pattern = re.compile(fr"^{p_key_date_string}_.*--{p_var_fn_mapped}-[^()]*\.nc$")
         else:
-            raise ValueError("Invalid date")
+            raise ValueError("Invalid date - function get_files_by_keystring_in_fn")
     else:
-        raise ValueError("Invalid dataset type")
+        raise ValueError("Invalid dataset type - function get_files_by_keystring_in_fn")
     
     matches = [
         item

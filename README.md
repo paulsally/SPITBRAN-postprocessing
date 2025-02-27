@@ -12,6 +12,7 @@ MITgcm-BFM postprocessing contains scripts for comparing model output files with
     - netCDF4
     - numpy
     - python-dateutil
+    (Jupyter and notebook to run scripts interactively)
 
 ## Usage:
 - Set config values (colours of plotted lines, geolocation, paths to directories of data to be plotted) in the file spitbran_config in the root directory of the project
@@ -25,7 +26,7 @@ cfg_data_base_dirs = {
 ```
 - Run script:
     - Interactively: Open the python script and run it in interactive window either via Visual Studio Code or on the Jupyter web innterface
-        - In this case the script asks to input the required variable values (if data is not found no error is handled gracefully this needs more development)
+        - In this case the script asks to input the values of required variables (if data is not found no error is handled gracefully this needs more development)
     - Via command line pass the variables values as arguments, e.g.: 
         ```python
         python plot_cmems_mitgcm_var_values_point_month.py 201211 temp

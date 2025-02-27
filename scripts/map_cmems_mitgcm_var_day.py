@@ -119,8 +119,7 @@ c_rean_im = my_plot_utilities.plot_map_minmax_nocb(
     "CMEMS Reanalysis\n(depth 0 i.e. mt=1.01)",
     c_rean_var,
     target_var,
-    c_rean_lon.min(), c_rean_lon.max(), 
-    c_rean_lat.min(), c_rean_lat.max(),
+    c_rean_lon, c_rean_lat,
     var_min, var_max,
 )
 
@@ -130,10 +129,12 @@ m_im = my_plot_utilities.plot_map_minmax_nocb(
     "MITgcm\n(depth linearly interpolated btw 0 and 1 i.e. 0.75 and 2.25)",
     m_var_d0_int,
     target_var,
-    m_lon.min(), m_lon.max(), 
-    m_lat.min(), m_lat.max(),
+    m_lon, m_lat,
     var_min, var_max,
 )
+
+for ax in axs:
+    ax.set_aspect(1)
 
 # Add a single colorbar
 cbar = fig.colorbar(

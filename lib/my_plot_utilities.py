@@ -3,8 +3,7 @@ def plot_map_minmax_nocb (
     p_ds_name,
     p_ds_var,
     p_target_var,
-    p_ds_lon_min, p_ds_lon_max,
-    p_ds_lat_min, p_ds_lat_max,
+    p_lon, p_lat,
     p_ds_var_min, p_ds_var_max
 ):
     """
@@ -15,37 +14,33 @@ def plot_map_minmax_nocb (
     p_ds_ax :                       ax
                                     An ax for the figure as returned by plt.subplots.
     p_ds_name :                     str
-                                    Name of the dataset e.g. CMEMS or MITgcm.
+                                    Title for the plot (usually containing the name of the dataset being plotted).
     p_ds_var :                      MaskedArray
-                                    The variable to plot the map of as extracted from the NetCDF dataset.
-    p_ds_lon_min, p_ds_lon_max :    float
-                                    Min and Max values of longitude in the dataset.
-    p_ds_lat_min, p_ds_lat_max :    float
-                                    Min and Max values of latitude in the dataset.
+                                    The values of the variable to plot the map of as extracted from the NetCDF dataset.
+    p_target_var :                  str
+                                    The target variable as requested in input.
+    p_lon, p_lat :                  MaskedArray
+                                    The values of the longitude and latitude to plot the map of as extracted from the NetCDF dataset.
     p_ds_var_min, p_ds_var_max :    int or float
-                                    Min and Max values of target variable to print the colorbar range.
+                                    Min and Max values of target variable to print the colorbar range (set in config file).
 
     Returns
     -------
-    ds_image                        matplotlib.image.AxesImage
+    mesh                            QuadMesh
                                     The image to be shown/saved.
     """
-    ds_image = p_ds_ax.imshow(
+    mesh = p_ds_ax.pcolormesh(
+        p_lon, 
+        p_lat, 
         p_ds_var, 
-        extent=[
-            p_ds_lon_min, p_ds_lon_max, 
-            p_ds_lat_min, p_ds_lat_max
-        ],
-        origin='lower', 
-        cmap='coolwarm', 
-        vmin=p_ds_var_min, 
-        vmax=p_ds_var_max
-    ) 
+        cmap="coolwarm", 
+        vmin=p_ds_var_min, vmax=p_ds_var_max
+    )
     p_ds_ax.set_title(f"{p_target_var} {p_ds_name}")
     p_ds_ax.set_xlabel("Longitude")
     p_ds_ax.set_ylabel("Latitude")
 
-    return ds_image
+    return mesh
 
 
 def on_pick(event, lines, legend, fig):
