@@ -1,4 +1,19 @@
 #!/bin/bash
+
+#
+# Script Name: get_cmems.sh
+# Author: Maria Fattorini
+# Date: 2024-05-08
+# Description: 
+#     This script retrieves data from the CMEMS dataset for a given date range.
+# Usage:
+#     ./get_cmems.sh "YYYY-MM-DD"
+# Notes:
+#     - Ensure you have the necessary input data and permissions.
+#     - Modify dir_file to change the data storage path.
+
+# Example:
+# To retrieve data for January 1, 2024, run the following command:
 # ./get_cmems.sh "2024-01-01"
 
 #module load python3/3.11.8-01
