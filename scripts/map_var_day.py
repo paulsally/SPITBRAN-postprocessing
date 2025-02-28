@@ -21,10 +21,10 @@ Usage:
 # %% [markdown]
 ## Imports and setup
 # %%
-import matplotlib.pyplot as plt
-from IPython import get_ipython
 import sys
 from pathlib import Path
+import matplotlib.pyplot as plt
+from IPython import get_ipython
 
 # %% 
 ## Get current working directory

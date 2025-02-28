@@ -3,8 +3,9 @@ Script Name: plot_var_values_point_month.py
 Author: Sara Polselli
 Date: 2025-02-27
 Description:
-    This script is used to see how a variable at a given point changes with time in the 3 datasets (CMEMS Reanalysis, CMEMS Observation, MITgcm output).
+    This script is used to see how the values of a variable in a given point changes with time in the 3 datasets (CMEMS Reanalysis, CMEMS Observation, MITgcm output).
     Lat, lon and depth index are fixed (set in config file).
+    Requires the date and the variable name as input (date format YYYYMMDD for a day, YYYYMM for a month, YYYY for a year).
     
     Features:
     For each dataset (c-rean, c-obs and m):
@@ -20,12 +21,13 @@ Usage:
 """
 # %%
 ## Import libraries
+import sys
+from pathlib import Path
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from IPython import get_ipython
-import sys
-from pathlib import Path
+
 
 # %% 
 ## Get current working directory
@@ -64,7 +66,7 @@ matplotlib.rcParams['webagg.open_in_browser'] = False
 ## Get target date and variable (and set defaults)
 target_date = my_sys_utilities.get_target_date(
     "201211",
-    "YYYYMM",
+    "YYYY, YYYYMM or YYYYMMDD",
 )
 target_var = my_sys_utilities.get_target_var(
     "temp",
@@ -107,7 +109,7 @@ for data_type, label in spitbran_config.cfg_datasets.items():
     if not(data_type == "c-obs" and target_var == "so"):
         line, = ax.plot(
             var_time[data_type], var_values[data_type],
-            marker=".", linestyle="solid",
+            marker=",", linestyle="solid",
             color=spitbran_config.cfg_colours[data_type],
             label=label
         )
@@ -118,7 +120,7 @@ if spitbran_config.cfg_var_d_values_flag[target_var]["m"]:
     var_time["m-d"] = var_time["c-rean"]
     line, = ax.plot(
         var_time["m-d"], var_daily_values["m"],
-        marker=".", linestyle="solid",
+        marker=",", linestyle="solid",
         color=spitbran_config.cfg_colours["m_avg"],
         label="MITgcm-BFM - Daily Avg"
     )

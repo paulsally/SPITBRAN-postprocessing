@@ -12,9 +12,9 @@ cfg_datasets = {
 # Colours
 cfg_colours = {
     "c-rean": "#76C893",
-    "c-obs": "#D5896F",
-    "m": "#168AAD",
-    "m_avg": "#1E6091"
+    "c-obs": "#fb8500",
+    "m": "#168aad",
+    "m_avg": "#1e6091"
 }
 
 # Set the paths to CMEMS and MITgcm-BFM base data directory

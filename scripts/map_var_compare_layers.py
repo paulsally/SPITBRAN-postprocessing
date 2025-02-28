@@ -25,11 +25,11 @@ Usage:
 # %% [markdown]
 ## Imports and setup
 # %%
-import matplotlib.pyplot as plt
-import numpy as np
-from IPython import get_ipython
 import sys
 from pathlib import Path
+import numpy as np
+import matplotlib.pyplot as plt
+from IPython import get_ipython
 
 # %% 
 ## Get current working directory
