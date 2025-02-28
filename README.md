@@ -5,8 +5,6 @@ MITgcm-BFM postprocessing contains scripts for comparing model output files with
     - plots maps side by side of variable of interest at depth index 0 and depth index 1. Tested with temperature (input temp for thetao) and salinity (input so). Also plots map of difference.
 - map_var_day.py
     - plots maps side by side of CMEMS Reanalysis and MITgcm-BFM output. Tested with temp and so.
-- plot_sst_year.py
-    - plots evolution in time of sst for given year.
 - plot_var_values_point_month.py 
     - plots the evolution in time of the values of a variable of interest in one point. Tested with var temp (thetao in CMEMS Reanalysis and MITgcm and analysed_sst in CMEMS Observations) and so (salinity).
 
@@ -46,8 +44,6 @@ cfg_data_base_dirs = {
     Tested with temp (thetao) and salinity (so).
 - map_var_day.py 
     - maps side by side of cmems reanalysis and MITgcm on given day.
-- plot_sst_year.py
-    - plot of evolution in time of sst for given year.
 - plot_var_values_point_month.py 
     - provides a link to open the result on a web page on localhost (needs portforwarding if not done automatically). This, i.e. the use of matplotlib.use('webAgg') has the advantage of providing a certain degree of interactivity where the visibility of the curves can be toggled by clicking on the corresponding line in the legend.
     - static image (.png) of the same plot.
