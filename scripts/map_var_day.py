@@ -1,5 +1,5 @@
 """
-Script Name: map_cmems_mitgcm_var_day.py
+Script Name: map_var_day.py
 Author: Sara Polselli
 Date: 2025-02-27
 Description:
@@ -13,8 +13,8 @@ Description:
     - Saves output figure file (.png)
     
 Usage:
-    python map_cmems_mitgcm_var_day.py 20130101 temp
-    python map_cmems_mitgcm_var_day.py 20130101 so
+    python map_var_day.py 20130101 temp
+    python map_var_day.py 20130101 so
     or interactively via VSCode or Jupyter and insert the date and variable when prompted
 """
 
@@ -168,7 +168,7 @@ cbar = fig.colorbar(
 )
 
 # Save image
-fig.savefig(rf"{cwd}/IMAGES/{target_date}--{var_min}-{var_max}--d0.png", dpi=300, bbox_inches='tight')
+fig.savefig(rf"{cwd}/IMAGES/{target_date}--{target_var}--{var_min}-{var_max}--d0.png", dpi=300, bbox_inches='tight')
 
 # Display the plots
 plt.show()

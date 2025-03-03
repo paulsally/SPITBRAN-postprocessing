@@ -1,5 +1,5 @@
 """
-Script Name: plot_var_values_point_month.py
+Script Name: plot_var_values_point.py
 Author: Sara Polselli
 Date: 2025-02-27
 Description:
@@ -165,5 +165,6 @@ plt.tight_layout()
 # %%
 # Save image and show the plot
 images_store_path = fr"{cwd}/IMAGES"
-plt.savefig(rf"{images_store_path}/{target_date}--{spitbran_config.cfg_latitude}-{spitbran_config.cfg_longitude}--{target_var}.png", dpi=300, bbox_inches="tight")
+file_name = f"{target_date}--{target_var}--{spitbran_config.cfg_latitude}-{spitbran_config.cfg_longitude}.png"
+plt.savefig(rf"{images_store_path}/{file_name}", dpi=300, bbox_inches="tight")
 plt.show()

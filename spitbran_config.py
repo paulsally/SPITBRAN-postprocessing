@@ -54,12 +54,12 @@ cfg_var_filename_map = {
 # Set the default min max values for the color bar scale
 cfg_var_min_max = {
     "temp": {
-        "c-rean": [11, 17],
-        "m": [11, 17]
+        "c-rean": [12, 30],
+        "m": [12, 30]
     },
     "so": {
-        "c-rean": [36, 40],
-        "m": [36, 40]
+        "c-rean": [37, 39],
+        "m": [37, 39]
     }
 }
 

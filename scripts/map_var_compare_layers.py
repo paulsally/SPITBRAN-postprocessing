@@ -1,6 +1,6 @@
 
 """
-Script Name: map_cmems_mitgcm_var_compare_layers.py
+Script Name: map_var_compare_layers.py
 Author: Sara Polselli
 Date: 2025-02-27
 Description:
@@ -17,8 +17,8 @@ Description:
     - Optionally prints the min and max values of the variable for debug purposes
 
 Usage:
-    python map_cmems_mitgcm_var_compare_layers.py 20130101 temp
-    python map_cmems_mitgcm_var_compare_layers.py 20130101 so
+    python map_var_compare_layers.py 20130101 temp
+    python map_var_compare_layers.py 20130101 so
     or interactively via VSCode or Jupyter and insert the date and variable when prompted
 """
 
@@ -152,7 +152,7 @@ for data_type in spitbran_config.cfg_datasets.keys():
         )
 
         # Save image
-        fig.savefig(rf"{cwd}/IMAGES/{target_var}-{target_date}--{var_min_across_layers}-{var_max_across_layers}--{data_type}--d0-d1.png", dpi=300, bbox_inches='tight')
+        fig.savefig(rf"{cwd}/IMAGES/{target_date}--{target_var}--{var_min_across_layers}-{var_max_across_layers}--{data_type}--d0-d1.png", dpi=300, bbox_inches='tight')
 
         # Save each plot as a single image to be able to compare them side by side or with adequate image comparing software
         # Heading has been removed so that when comparing files with a comparison tool the images are not considered different only because of the heading
@@ -175,7 +175,7 @@ for data_type in spitbran_config.cfg_datasets.keys():
             shrink=0.8
         )
         # Save image
-        fig_d0.savefig(rf"{cwd}/IMAGES/{target_var}-{target_date}--{var_min_across_layers}-{var_max_across_layers}--{data_type}--d0.png", dpi=300, bbox_inches='tight')
+        fig_d0.savefig(rf"{cwd}/IMAGES/{target_date}--{target_var}--{var_min_across_layers}-{var_max_across_layers}--{data_type}--d0.png", dpi=300, bbox_inches='tight')
         # Plot the dataset at second layer (depth 1)
         fig_d1, axs_d1 = plt.subplots(1, 1, figsize=(12, 6), constrained_layout=True)
         img_d1_single = my_plot_utilities.plot_map_minmax_nocb(
@@ -195,11 +195,11 @@ for data_type in spitbran_config.cfg_datasets.keys():
             shrink=0.8
         )
         # Save image
-        fig_d1.savefig(rf"{cwd}/IMAGES/{target_var}-{target_date}--{var_min_across_layers}-{var_max_across_layers}--{data_type}--d1.png", dpi=300, bbox_inches='tight')
+        fig_d1.savefig(rf"{cwd}/IMAGES/{target_date}--{target_var}--{var_min_across_layers}-{var_max_across_layers}--{data_type}--d1.png", dpi=300, bbox_inches='tight')
 
         # Compute element-wise comparison of var at first and second layers and plot the difference
         var_d0_d1_diff = var_d0 - var_d1
-        np.savetxt(f"{target_var}--{target_date}--{var_min_across_layers}-{var_max_across_layers}--{data_type}--d0-d1-diff.txt", var_d0_d1_diff, fmt='%s')
+        np.savetxt(f"{cwd}/IMAGES/txt/{target_date}--{target_var}--{var_min_across_layers}-{var_max_across_layers}--{data_type}--d0-d1-diff.txt", var_d0_d1_diff, fmt='%s')
 
         fig_d0_d1_diff, axs_d0_d1_diff = plt.subplots(1, 1, figsize=(12, 6), constrained_layout=True)
 
@@ -221,7 +221,7 @@ for data_type in spitbran_config.cfg_datasets.keys():
         )
 
         # Save image
-        fig_d0_d1_diff.savefig(rf"{cwd}/IMAGES/{target_var}--{target_date}--{var_min_across_layers}-{var_max_across_layers}--{data_type}--d0-d1-diff.png", dpi=300, bbox_inches='tight')
+        fig_d0_d1_diff.savefig(rf"{cwd}/IMAGES/{target_date}--{target_var}--{var_min_across_layers}-{var_max_across_layers}--{data_type}--d0-d1-diff.png", dpi=300, bbox_inches='tight')
 
 # Display the plots
 plt.show()

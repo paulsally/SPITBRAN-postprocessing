@@ -7,6 +7,10 @@ MITgcm-BFM postprocessing contains scripts for comparing model output files with
     - plots maps side by side of CMEMS Reanalysis and MITgcm-BFM output. Tested with temp and so.
 - plot_var_values_point_month.py 
     - plots the evolution in time of the values of a variable of interest in one point. Tested with var temp (thetao in CMEMS Reanalysis and MITgcm and analysed_sst in CMEMS Observations) and so (salinity).
+- get_gg_cmems.sh, get_cmems.sh
+    - shell scripts to download datasets from CMEMS Reanalysis (launch get_gg_cmems.sh with arguments and this will call get_cmems.sh for every day of download)
+- get_gg_cmems_obs.sh, get_cmems_obs.sh
+    - shell scripts to download datasets from CMEMS Observations (launch get_gg_cmems_obs.sh with arguments and this will call get_cmems_obs.sh for every day of download)
 
 ## Prerequisites
 - Create a conda environment with the following packages:
@@ -47,3 +51,5 @@ cfg_data_base_dirs = {
 - plot_var_values_point_month.py 
     - provides a link to open the result on a web page on localhost (needs portforwarding if not done automatically). This, i.e. the use of matplotlib.use('webAgg') has the advantage of providing a certain degree of interactivity where the visibility of the curves can be toggled by clicking on the corresponding line in the legend.
     - static image (.png) of the same plot.
+- get_gg_cmems.sh, get_cmems.sh, get_gg_cmems_obs.sh, get_cmems_obs.sh
+    - .nc files of required CMEMS datasets downloaded in specified storage path
