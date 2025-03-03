@@ -5,7 +5,7 @@ MITgcm-BFM postprocessing contains scripts for comparing model output files with
     - plots maps side by side of variable of interest at depth index 0 and depth index 1. Tested with temperature (input temp for thetao) and salinity (input so). Also plots map of difference.
 - map_var_day.py
     - plots maps side by side of CMEMS Reanalysis and MITgcm-BFM output. Tested with temp and so.
-- plot_var_values_point_month.py 
+- plot_var_values_point.py 
     - plots the evolution in time of the values of a variable of interest in one point. Tested with var temp (thetao in CMEMS Reanalysis and MITgcm and analysed_sst in CMEMS Observations) and so (salinity).
 - get_gg_cmems.sh, get_cmems.sh
     - shell scripts to download datasets from CMEMS Reanalysis (launch get_gg_cmems.sh with arguments and this will call get_cmems.sh for every day of download)
