@@ -82,7 +82,7 @@ var_units = {}
 var_daily_values = {}
 for data_type in spitbran_config.cfg_datasets.keys():
     if not(data_type == "c-obs" and target_var == "so"):
-        var_time[data_type], var_values[data_type], var_daily_values[data_type], var_long_name[data_type], var_units[data_type] = my_nc_utilities.get_values_in_point_with_time_given_month(
+        var_time[data_type], var_values[data_type], var_daily_values[data_type], var_long_name[data_type], var_units[data_type] = my_nc_utilities.get_values_in_point_with_time(
             data_type,
             spitbran_config.cfg_data_base_dirs[data_type],
             target_date,

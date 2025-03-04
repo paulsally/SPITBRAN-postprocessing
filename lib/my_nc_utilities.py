@@ -58,7 +58,7 @@ def get_lat_lon_idx(p_ds, p_latitude, p_longitude):
     return p_lat_idx, p_lon_idx
 
 
-def get_values_in_point_with_time_given_month(
+def get_values_in_point_with_time(
     p_ds_type,
     p_data_base_dir,
     p_target_date,
