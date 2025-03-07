@@ -42,7 +42,7 @@ plt.plot(
     depth_w_c,
     marker=",", 
     linestyle="solid", 
-    color="#76C893",
+    color=spitbran_config.cfg_colours["c-rean"]["seasonal"]["winter"],
     label="C Rean Winter",
 )
 plt.plot(
@@ -50,7 +50,7 @@ plt.plot(
     depth_w_c,
     marker=",", 
     linestyle="solid", 
-    color="#46AF6B",
+    color=spitbran_config.cfg_colours["c-rean"]["seasonal"]["summer"],
     label="C Rean Summer",
 )
 plt.plot(
@@ -58,7 +58,7 @@ plt.plot(
     depth_w_m,
     marker=",", 
     linestyle="solid", 
-    color="#4ac3e8",
+    color=spitbran_config.cfg_colours["m"]["seasonal"]["winter"],
     label="M Winter",
 )
 plt.plot(
@@ -66,7 +66,7 @@ plt.plot(
     depth_w_m,
     marker=",", 
     linestyle="solid", 
-    color="#168aad",
+    color=spitbran_config.cfg_colours["m"]["seasonal"]["summer"],
     label="M Summer",
 )
 
