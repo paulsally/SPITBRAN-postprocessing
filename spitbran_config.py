@@ -33,11 +33,11 @@ cfg_colours = {
     }
 }
 
-# Set the paths to CMEMS and MITgcm-BFM base data directory
+# Set the paths strings to CMEMS and MITgcm-BFM base data directory 
+#   As string ad this will be transformed in Path later)
 cfg_data_base_dirs = {
-    #"c-rean": r"/OCEANASTORE/database/CMEMS/rean-d",
-    "c-rean": "~/SPITBRAN/DATA/CMEMS/rean-d",
-    "c-obs": "~/SPITBRAN/DATA/CMEMS/obs",
+    "c-rean": "/OCEANASTORE/database/CMEMS/rean-d",
+    "c-obs": "/OCEANASTORE/database/CMEMS/SST_MED_SST_L4_REP_OBSERVATIONS_010_021",
     "m": "/OCEANASTORE/progetti/spitbran2/MITgcm_products/outputs"
 }
 

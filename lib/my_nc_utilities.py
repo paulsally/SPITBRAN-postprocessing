@@ -49,9 +49,13 @@ def get_lat_lon_idx(p_ds, p_latitude, p_longitude):
     lon_idx :                   int
                                 Nearest longitude index.
     """           
+    try:
+        p_latitudes = p_ds.variables['latitude'][:]
+        p_longitudes = p_ds.variables['longitude'][:]
+    except:
+        p_latitudes = p_ds.variables['LATITUDE'][:]
+        p_longitudes = p_ds.variables['LONGITUDE'][:]       
 
-    p_latitudes = p_ds.variables['latitude'][:]
-    p_longitudes = p_ds.variables['longitude'][:]
     p_lat_idx = np.abs(p_latitudes - p_latitude).argmin()
     p_lon_idx = np.abs(p_longitudes - p_longitude).argmin()
 
