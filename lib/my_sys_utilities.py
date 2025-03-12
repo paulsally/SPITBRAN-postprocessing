@@ -107,30 +107,31 @@ def get_files_by_keystring_in_fn(p_ds_type, p_root_dir, p_var_fn_mapped, p_key_d
         p_ds_type == "c-rean"
     ):
         # Test for file name 
-        #   starting with 5 characters (e.g. "cmems") excluding digits
-        #   containing the target variable name
-        pattern = re.compile(fr"^[^\d]{{5}}_{p_var_fn_mapped}-.*_{p_key_date_string}[^()]*\.nc$")
+        #   - starting with 5 characters (e.g. "cmems") excluding digits
+        #   - containing the target variable name
+        pattern = fr"^[^\d]{{5}}_{p_var_fn_mapped}-.*_{p_key_date_string}[^()]*\.nc$"
     elif p_ds_type == "c-obs":
-        pattern = re.compile(fr"^[^\d]{{5}}_{p_var_fn_mapped}-.*_{p_key_date_string}[^()]*\.nc$")
+        pattern = fr"^[^\d]{{5}}-{p_var_fn_mapped}-.*_{p_key_date_string}[^()]*\.nc$"
     elif p_ds_type == "m":
         # Test for file name:
-        #   starting with 6 digits which is the target date and may be 4 or 6 digits long
-        #   containing the target variable name
+        #   - starting with 4, 6 or 8 digits which is the target date (4: full year, 6: full month, 8: a day, not really useful)
+        #   - containing the target variable name
         if len(p_key_date_string) == 4:
-            pattern = re.compile(fr"^{p_key_date_string}\d{{4}}_.*--{p_var_fn_mapped}-[^()]*\.nc$")
+            pattern = fr"^{p_key_date_string}\d{{4}}_.*--{p_var_fn_mapped}-[^()]*\.nc$"
         elif len(p_key_date_string) == 6:
-            pattern = re.compile(fr"^{p_key_date_string}\d{{2}}_.*--{p_var_fn_mapped}-[^()]*\.nc$")
+            pattern = fr"^{p_key_date_string}\d{{2}}_.*--{p_var_fn_mapped}-[^()]*\.nc$"
         elif len(p_key_date_string) == 8:
-            pattern = re.compile(fr"^{p_key_date_string}_.*--{p_var_fn_mapped}-[^()]*\.nc$")
+            pattern = fr"^{p_key_date_string}_.*--{p_var_fn_mapped}-[^()]*\.nc$"
         else:
             raise ValueError("Invalid date - function get_files_by_keystring_in_fn")
     else:
         raise ValueError("Invalid dataset type - function get_files_by_keystring_in_fn")
     
+    pattern_compiled = re.compile(pattern)
     matches = [
         item
         for item in root_path.rglob("*")
-            if item.is_file() and pattern.match(item.name)
+            if item.is_file() and pattern_compiled.match(item.name)
     ]
     # matches = [
     #     subitem
@@ -155,4 +156,7 @@ def get_files_by_keystring_in_fn(p_ds_type, p_root_dir, p_var_fn_mapped, p_key_d
     #                 print(subitem)
     # print(f"matches: {sorted(matches)}")
     # print(f"p_ds_type:{p_ds_type} - len matches: {len(matches)}")
-    return sorted(matches)
+    if matches:
+        return sorted(matches)
+    else:
+        raise(RuntimeError(f"No files found: ds {p_ds_type} and pattern {pattern} - get_files_by_keystring_in_fn"))

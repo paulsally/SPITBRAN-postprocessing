@@ -81,12 +81,12 @@ for data_type in spitbran_config.cfg_datasets.keys():
     if (data_type != "c-obs"):
 
         # Map the target variable to corresponding variable names in CMEMS and MITgcm-BFM file names
-        target_var_fn_mapped[data_type] = spitbran_config.cfg_var_filename_map[target_var][data_type]
+        target_var_fn_mapped[data_type] = spitbran_config.cfg_datasets[data_type]["var_filename"][target_var]
 
         # Load NetCDF file
         ds = my_nc_utilities.get_values_map_specific_day(
             data_type,
-            spitbran_config.cfg_data_base_dirs[data_type],
+            spitbran_config.cfg_datasets[data_type]["base_data_dir"],
             target_date,
             target_var_fn_mapped[data_type],
         )
@@ -98,8 +98,8 @@ for data_type in spitbran_config.cfg_datasets.keys():
         #   - depth is the second dimension in the dataset
         #   - in the case of MITgcm-BFM, the data gets avaraged over the time dimension 
         #     (in cmems case of CMEMS this is irrelevant as there is only one measurement per day)
-        var_d0 = ds.variables[spitbran_config.cfg_var_name[target_var][data_type]][:, 0, :, :].mean(axis=0)
-        var_d1 = ds.variables[spitbran_config.cfg_var_name[target_var][data_type]][:, 1, :, :].mean(axis=0)
+        var_d0 = ds.variables[spitbran_config.cfg_datasets[data_type]["var_name"][target_var]][:, 0, :, :].mean(axis=0)
+        var_d1 = ds.variables[spitbran_config.cfg_datasets[data_type]["var_name"][target_var]][:, 1, :, :].mean(axis=0)
         
         # Extract latitude and longitude
         lat = ds.variables['latitude'][:]
@@ -110,8 +110,8 @@ for data_type in spitbran_config.cfg_datasets.keys():
         #   Prefer fixed values so that different datasets at differnt times can be compared against the same range
         # var_min_across_layers = math.floor(min(var_d0.min(), var_d1.min()))
         # var_max_across_layers = math.ceil(max(var_d0.max(), var_d1.max()))
-        var_min_across_layers = spitbran_config.cfg_var_min_max[target_var][data_type][0]
-        var_max_across_layers = spitbran_config.cfg_var_min_max[target_var][data_type][1]
+        var_min_across_layers = spitbran_config.cfg_datasets[data_type]["min_max"][target_var][0]
+        var_max_across_layers = spitbran_config.cfg_datasets[data_type]["min_max"][target_var][1]
         # Print the min and max values of the variable (for debug reasons)
         # my_debug_utilities.print_min_max_values(var_d0, var_d1, lat, lon)
 
@@ -147,7 +147,7 @@ for data_type in spitbran_config.cfg_datasets.keys():
             img_d1, 
             ax=axs,
             orientation="vertical", 
-            label=f"{target_var} ({ds.variables[spitbran_config.cfg_var_name[target_var][data_type]].units})", 
+            label=f"{target_var} ({ds.variables[spitbran_config.cfg_datasets[data_type]["var_name"][target_var]].units})", 
             shrink=0.8
         )
 
@@ -171,7 +171,7 @@ for data_type in spitbran_config.cfg_datasets.keys():
             img_d0_single, 
             ax=axs_d0, 
             orientation="vertical", 
-            label=f"{target_var} ({ds.variables[spitbran_config.cfg_var_name[target_var][data_type]].units})", 
+            label=f"{target_var} ({ds.variables[spitbran_config.cfg_datasets[data_type]["var_name"][target_var]].units})", 
             shrink=0.8
         )
         # Save image
@@ -191,7 +191,7 @@ for data_type in spitbran_config.cfg_datasets.keys():
             img_d1_single, 
             ax=axs_d1, 
             orientation="vertical", 
-            label=f"{target_var} ({ds.variables[spitbran_config.cfg_var_name[target_var][data_type]].units})", 
+            label=f"{target_var} ({ds.variables[spitbran_config.cfg_datasets[data_type]["var_name"][target_var]].units})", 
             shrink=0.8
         )
         # Save image
@@ -216,7 +216,7 @@ for data_type in spitbran_config.cfg_datasets.keys():
             var_d0_d1_diff_img, 
             ax=axs_d0_d1_diff, 
             orientation="vertical", 
-            label=f"{target_var} ({ds.variables[spitbran_config.cfg_var_name[target_var][data_type]].units})", 
+            label=f"{target_var} ({ds.variables[spitbran_config.cfg_datasets[data_type]["var_name"][target_var]].units})", 
             shrink=0.8
         )
 

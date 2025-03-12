@@ -84,14 +84,14 @@ for data_type in spitbran_config.cfg_datasets.keys():
     if not(data_type == "c-obs" and target_var == "so"):
         var_time[data_type], var_values[data_type], var_daily_values[data_type], var_long_name[data_type], var_units[data_type] = my_nc_utilities.get_values_in_point_with_time(
             data_type,
-            spitbran_config.cfg_data_base_dirs[data_type],
+            spitbran_config.cfg_datasets[data_type]["base_data_dir"],
             target_date,
-            spitbran_config.cfg_var_name[target_var][data_type],
-            spitbran_config.cfg_var_filename_map[target_var][data_type],
+            spitbran_config.cfg_datasets[data_type]["var_name"][target_var],
+            spitbran_config.cfg_datasets[data_type]["var_filename"][target_var],
             spitbran_config.cfg_latitude,
             spitbran_config.cfg_longitude,
             spitbran_config.cfg_depth_index,
-            spitbran_config.cfg_var_d_values_flag[target_var][data_type],
+            spitbran_config.cfg_datasets[data_type]["var_d_values_flag"],
         )
 
 # %%
@@ -103,15 +103,15 @@ plt.close('all')
 fig = plt.figure(num=1, figsize=(10, 6), dpi=100)
 fig.clf()
 ax = fig.add_subplot(111)  
-# print(f"aaas: {spitbran_config.cfg_colours['c-rean']['main']}")
 lines = []
-for data_type, label in spitbran_config.cfg_datasets.items():
+for data_type in spitbran_config.cfg_datasets.keys():
     if not(data_type == "c-obs" and target_var == "so"):
+        # print(data_type)
         line, = ax.plot(
             var_time[data_type], var_values[data_type],
             marker=",", linestyle="solid",
-            color=spitbran_config.cfg_colours[data_type]["main"],
-            label=label
+            color=spitbran_config.cfg_datasets[data_type]["colour"]["main"],
+            label=spitbran_config.cfg_datasets[data_type]["legend"]
         )
         lines.append(line)
 
@@ -121,7 +121,7 @@ if spitbran_config.cfg_var_d_values_flag[target_var]["m"]:
     line, = ax.plot(
         var_time["m-d"], var_daily_values["m"],
         marker=",", linestyle="solid",
-        color=spitbran_config.cfg_colours["m_avg"]["main"],
+        color=spitbran_config.cfg_datasets["m"]["colour"]["avg"],
         label="MITgcm-BFM - Daily Avg"
     )
     lines.append(line)

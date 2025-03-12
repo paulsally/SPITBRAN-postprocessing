@@ -73,30 +73,30 @@ target_var = my_sys_utilities.get_target_var(
 #%%
 c_rean_ds = my_nc_utilities.get_values_map_specific_day(
     "c-rean",
-    spitbran_config.cfg_data_base_dirs["c-rean"],
+    spitbran_config.cfg_datasets["c-rean"]["base_data_dir"],
     target_date,
-    spitbran_config.cfg_var_filename_map[target_var]["c-rean"],
+    spitbran_config.cfg_datasets["c-rean"]["var_filename"][target_var],
 )
 
 # Load MITgcm-BFM output file
 m_ds = my_nc_utilities.get_values_map_specific_day(
     "m",
-    spitbran_config.cfg_data_base_dirs["m"],
+    spitbran_config.cfg_datasets["m"]["base_data_dir"],
     target_date,
-    spitbran_config.cfg_var_filename_map[target_var]["m"],
+    spitbran_config.cfg_datasets["m"]["var_filename"][target_var],
 )
 
 # %%
 # Extract var data at the target time and depth indices 0 and 1
 # print(c_ds.variables.keys())
 # print(m_ds.variables[spitbran_config.cfg_var_name[target_var][data_type]].dimensions)
-c_rean_var = c_rean_ds.variables[spitbran_config.cfg_var_name[target_var]["c-rean"]][0, 0, :, :]  # ('time', 'depth', 'latitude', 'longitude')
+c_rean_var = c_rean_ds.variables[spitbran_config.cfg_datasets["c-rean"]["var_name"][target_var]][0, 0, :, :]  # ('time', 'depth', 'latitude', 'longitude')
 # print(m_ds.variables[spitbran_config.cfg_var_name[target_var][data_type]].dimensions)
 
 # MITgcm: 3-hourly outputs so need to take average of the 8 values per day
 # First and second layer
-m_var_d0 = m_ds.variables[spitbran_config.cfg_var_name[target_var]["m"]][:, 0, :, :].mean(axis=0)
-m_var_d1 = m_ds.variables[spitbran_config.cfg_var_name[target_var]["m"]][:, 1, :, :].mean(axis=0)
+m_var_d0 = m_ds.variables[spitbran_config.cfg_datasets["m"]["var_name"][target_var]][:, 0, :, :].mean(axis=0)
+m_var_d1 = m_ds.variables[spitbran_config.cfg_datasets["m"]["var_name"][target_var]][:, 1, :, :].mean(axis=0)
 # m_ds.variables[spitbran_config.cfg_var_name[target_var][data_type]].dimensions
 # units = m_ds.variables[spitbran_config.cfg_var_name[target_var][data_type]].units
 
@@ -128,8 +128,8 @@ m_lon = m_ds.variables['longitude'][:]
 #   Prefer fixed values so that different plots at differnt times can be compared against the same range
 # var_min_across_layers = math.floor(min(var_d0.min(), var_d1.min()))
 # var_max_across_layers = math.ceil(max(var_d0.max(), var_d1.max()))
-var_min = spitbran_config.cfg_var_min_max[target_var]["c-rean"][0]
-var_max = spitbran_config.cfg_var_min_max[target_var]["c-rean"][1]
+var_min = spitbran_config.cfg_datasets["c-rean"]["min_max"][target_var][0]
+var_max = spitbran_config.cfg_datasets["c-rean"]["min_max"][target_var][1]
 
 # Create a figure and axes (two subplots)
 fig, axs = plt.subplots(1, 2, figsize=(12, 6), constrained_layout=True)
@@ -163,7 +163,7 @@ cbar = fig.colorbar(
     c_rean_im, 
     ax=axs, 
     orientation="vertical", 
-    label=f"{target_var} ({m_ds.variables[spitbran_config.cfg_var_name[target_var]['c-rean']].units})", 
+    label=f"{target_var} ({m_ds.variables[spitbran_config.cfg_datasets["c-rean"]["var_name"][target_var]].units})", 
     shrink=0.8
 )
 
