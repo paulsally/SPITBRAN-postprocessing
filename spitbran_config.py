@@ -9,10 +9,10 @@ cfg_datasets = {
         "legend": "CMEMS Rean",
         "colour": {
             "main": "#46af6b",
-            "seasonal": frozenset({
+            "seasonal": {
                 "winter": "#46af6b",
                 "summer": "#6DC58C",
-            }),
+            },
         },
         "var_name": {
             "temp": "thetao",
@@ -30,13 +30,13 @@ cfg_datasets = {
     },
     "c-obs": {
         "base_data_dir": "/OCEANASTORE/database/CMEMS/SST_MED_SST_L4_REP_OBSERVATIONS_010_021",
-        "legend": "CMEMS Obs",
+        "legend": "CMEMS Obs Sat",
         "colour": {
             "main": "#fb8500",
-            "seasonal": frozenset({
+            "seasonal": {
                 "winter": "#fb8500",
                 "summer": "#",
-            }),
+            },
         },
         "var_name": {
             "temp": "analysed_sst",
@@ -57,10 +57,10 @@ cfg_datasets = {
         "legend": "MITgcm-BFM",
         "colour": {
             "main": "#168aad",
-            "seasonal": frozenset({
+            "seasonal": {
                 "winter": "#168aad",
                 "summer": "#26b7e3",
-            }),
+            },
             "avg": "#1e6091",
         },
         "var_name": {

@@ -34,10 +34,10 @@ cfg_datasets = {
         "legend": "CMEMS Rean",
         "colour": {
             "main": "#46af6b",
-            "seasonal": frozenset({
+            "seasonal": {
                 "winter": "#46af6b",
                 "summer": "#6DC58C",
-            }),
+            },
         },
         "var_name": {
             "temp": "thetao",

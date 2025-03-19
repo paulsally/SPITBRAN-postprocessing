@@ -116,7 +116,7 @@ for data_type in spitbran_config.cfg_datasets.keys():
         lines.append(line)
 
 ## Check if daily values should be plotted
-if spitbran_config.cfg_var_d_values_flag[target_var]["m"]:
+if spitbran_config.cfg_datasets["m"]["var_d_values_flag"]:
     var_time["m-d"] = var_time["c-rean"]
     line, = ax.plot(
         var_time["m-d"], var_daily_values["m"],

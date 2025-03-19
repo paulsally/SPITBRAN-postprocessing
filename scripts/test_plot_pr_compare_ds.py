@@ -36,8 +36,8 @@ lat_idx_c_insitu, lon_idx_c_insitu = my_nc_utilities.get_lat_lon_idx(test_ds_w_c
 print("depth ", test_ds_w_c_insitu.variables['DEPH'].dimensions)
 print("temp ", test_ds_w_c_insitu.variables['TEMP'].dimensions)
 
-thetao_w_c_insitu_profile = test_ds_w_c_insitu.variables['TEMP'][0, :]
-thetao_s_c_insitu_profile = test_ds_s_c_insitu.variables['TEMP'][0, :]
+thetao_w_c_insitu_profile = test_ds_w_c_insitu.variables['TEMP'][1, :]
+thetao_s_c_insitu_profile = test_ds_s_c_insitu.variables['TEMP'][1, :]
 
 lat_idx_m, lon_idx_m = my_nc_utilities.get_lat_lon_idx(test_ds_w_m, spitbran_config.cfg_latitude, spitbran_config.cfg_longitude)
 thetao_w_m_profile = test_ds_w_m.variables['thetao'][:, :, lat_idx_m, lon_idx_m].mean(axis=0)
@@ -57,7 +57,7 @@ ax1.plot(
     depth_w_c_rean,
     marker=",", 
     linestyle="solid", 
-    color=spitbran_config.cfg_colours["c-rean"]["seasonal"]["winter"],
+    color=spitbran_config.cfg_datasets["c-rean"]["colour"]["seasonal"]["winter"],
     label="C Rean Winter",
 )
 ax1.plot(
@@ -65,7 +65,7 @@ ax1.plot(
     depth_w_c_rean,
     marker=",", 
     linestyle="solid", 
-    color=spitbran_config.cfg_colours["c-rean"]["seasonal"]["summer"],
+    color=spitbran_config.cfg_datasets["c-rean"]["colour"]["seasonal"]["summer"],
     label="C Rean Summer",
 )
 ax1.invert_yaxis()
@@ -77,7 +77,7 @@ ax2.plot(
     depth_w_c_insitu,
     marker=",", 
     linestyle="solid", 
-    # color=spitbran_config.cfg_colours["c-rean"]["seasonal"]["winter"],
+    # color=spitbran_config.cfg_datasets["c-rean"]["colour"]["seasonal"]["winter"],
     color="y",
     label="C Insitu Winter",
 )
@@ -86,7 +86,7 @@ ax2.plot(
     depth_s_c_insitu,
     marker=",", 
     linestyle="solid", 
-    # color=spitbran_config.cfg_colours["c-rean"]["seasonal"]["summer"],
+    # color=spitbran_config.cfg_datasets["c-rean"]["colour"]["seasonal"]["summer"],
     color="r",
     label="C Insitu Summer",
 )
@@ -96,7 +96,7 @@ ax1.plot(
     depth_w_m,
     marker=",", 
     linestyle="solid", 
-    color=spitbran_config.cfg_colours["m"]["seasonal"]["winter"],
+    color=spitbran_config.cfg_datasets["m"]["colour"]["seasonal"]["winter"],
     label="M Winter",
 )
 ax1.plot(
@@ -104,7 +104,7 @@ ax1.plot(
     depth_w_m,
     marker=",", 
     linestyle="solid", 
-    color=spitbran_config.cfg_colours["m"]["seasonal"]["summer"],
+    color=spitbran_config.cfg_datasets["m"]["colour"]["seasonal"]["summer"],
     label="M Summer",
 )
 
