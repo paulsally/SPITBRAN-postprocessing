@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# ./get_gg_cmems.sh "2024-04-01" "2024-04-02"
+# ./get_gg_cmems_obs.sh "2024-04-01" "2024-04-02"
 dstart=$1
 dend=$2
 
